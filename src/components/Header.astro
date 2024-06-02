@@ -1,22 +1,37 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
+import { LOGO_SMALL } from "../assets/logos.tsx";
+import "./header.scss";
 ---
 
 <header class="bg-black">
 	<nav>
-		<h2 class="text-green-700 font-bold"><a href="/">{SITE_TITLE}</a></h2>
+		<h2 class="text-teal-300 hover:text-teal-500 font-bold">
+			<a href="/">
+				<div>
+					<LOGO_SMALL />{SITE_TITLE}
+				</div>
+			</a>
+		</h2>
 		<div class="internal-links">
-			<HeaderLink href="/"><span class="text-green-600">Home</span></HeaderLink>
+			<HeaderLink href="/"
+				><span class="text-teal-300 hover:text-teal-500">Home</span></HeaderLink
+			>
 			<HeaderLink href="/blog"
-				><span class="text-green-600">Blog</span></HeaderLink
+				><span class="text-teal-300 hover:text-teal-500">Blog</span></HeaderLink
 			>
 			<HeaderLink href="/about"
-				><span class="text-green-600">About</span></HeaderLink
+				><span class="text-teal-300 hover:text-teal-500">About</span
+				></HeaderLink
 			>
 		</div>
 		<div class="social-links">
-			<a href="https://github.com/emgi13" target="_blank">
+			<a
+				href="https://github.com/emgi13"
+				class="text-teal-300 hover:text-teal-500"
+				target="_blank"
+			>
 				<span class="sr-only">Go to Astro's GitHub repo</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
 					><path
@@ -28,43 +43,3 @@ import { SITE_TITLE } from "../consts";
 		</div>
 	</nav>
 </header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
-
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
-</style>
