@@ -11,7 +11,7 @@ const Logo3D = () => {
   const diff = 1;
   return (
     <>
-      <Atropos className="logo-3d-atropos" shadow={false}>
+      <Atropos className="logo-3d-atropos" shadow={false} highlight={false}>
         {LOGO_LAYERS.reverse().map((v, i) => {
           let divs = [];
           for (let ind = 0; ind < repeat; ind++) {
