@@ -30,6 +30,27 @@ body.Homepage {
     }
     .text-cont {
       flex: 3;
+      padding: 24px;
+      font-size: 2em;
+      box-sizing: border-box;
+      span {
+      }
+    }
+    @media (max-aspect-ratio: 1/1) {
+      flex-direction: column;
+      .logo-cont {
+        flex: 6;
+      }
+      .text-cont {
+        flex: 2;
+        padding: 0 48px;
+        // font-size: 1.4em;
+        span {
+          display: block;
+          text-align: center;
+          font-size: 1.5em;
+        }
+      }
     }
   }
 }
