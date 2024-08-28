@@ -4,7 +4,7 @@ import p5 from "p5";
 class GameOfLifeComponent extends React.Component {
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
-  constructor(props) {
+  constructor(props: {}) {
     super(props);
     this.p5ref = React.createRef();
   }
