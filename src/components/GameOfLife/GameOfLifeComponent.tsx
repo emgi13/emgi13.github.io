@@ -24,7 +24,10 @@ class GameOfLifeComponent extends React.Component {
 
   sketch = (p: p5) => {
     p.setup = () => {
-      p.createCanvas(400, 400);
+      p.createCanvas(
+        this.p5ref.current?.offsetWidth || 400,
+        this.p5ref.current?.offsetHeight || 400,
+      );
       p.background(220);
     };
 
