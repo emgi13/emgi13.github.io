@@ -21,6 +21,7 @@ body.Homepage {
     flex: 1;
     margin: 1em;
     height: 100%;
+    font-size: 1.4em;
     display: flex;
     flex-direction: row;
     justify-content: stretch;
@@ -28,16 +29,28 @@ body.Homepage {
     .logo-cont {
       flex: 5;
     }
+    .phone-only-text {
+      display: none;
+    }
     .text-cont {
       flex: 3;
       padding: 24px;
-      font-size: 2em;
       box-sizing: border-box;
       span {
+        display: block;
+        font-size: 2.5em;
+        line-height: 1;
+        font-weight: bolder;
       }
     }
     @media (max-aspect-ratio: 1/1) {
       flex-direction: column;
+      .phone-only-text {
+        display: unset;
+      }
+      .pc-only-text {
+        display: none;
+      }
       .logo-cont {
         flex: 6;
       }
@@ -46,9 +59,7 @@ body.Homepage {
         padding: 0 48px;
         // font-size: 1.4em;
         span {
-          display: block;
           text-align: center;
-          font-size: 1.5em;
         }
       }
     }
