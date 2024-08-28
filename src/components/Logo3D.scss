@@ -1,8 +1,25 @@
 @import "atropos/scss";
 
+.logo-3d-cont {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+}
+
 .logo-3d-atropos {
+  flex: 1;
   height: 100%;
   width: 100%;
+}
+
+.logo-3d-helper {
+  font-size: 0.7em;
+  padding: 0.2em;
+  text-align: center;
+  color: var(--surface0);
 }
 
 span.atropos-inner {
