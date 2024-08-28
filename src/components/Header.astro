@@ -2,18 +2,13 @@
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
 import { LOGO_SMALL } from "../assets/logos.tsx";
+import SiteLogo from "./SiteLogo";
 import "./header.scss";
 ---
 
 <header>
 	<nav>
-		<h2>
-			<a href="/">
-				<div>
-					<div><LOGO_SMALL /></div><div>{SITE_TITLE}</div>
-				</div>
-			</a>
-		</h2>
+		<HeaderLink href="/"><SiteLogo /></HeaderLink>
 		<div class="internal-links">
 			<HeaderLink href="/"><span>Home</span></HeaderLink>
 			<HeaderLink href="/blog"><span>Blog</span></HeaderLink>
