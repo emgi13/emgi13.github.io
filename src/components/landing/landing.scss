@@ -21,6 +21,7 @@ body.Homepage {
     flex: 1;
     margin: 1em;
     height: 100%;
+    color: var(--overlay0);
     font-size: 1.4em;
     display: flex;
     flex-direction: row;
@@ -41,9 +42,14 @@ body.Homepage {
         font-size: 2.5em;
         line-height: 1;
         font-weight: bolder;
+        background-image: linear-gradient(30deg, var(--red), var(--yellow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text; /* For other browsers */
+        color: transparent; /* Fallback for browsers that do not support background-clip */
       }
     }
-    @media (max-aspect-ratio: 1/1) {
+    @media (max-width: 720px) {
       flex-direction: column;
       .phone-only-text {
         display: unset;
