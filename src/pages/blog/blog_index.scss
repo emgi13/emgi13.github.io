@@ -1,0 +1,15 @@
+.BlogIndex {
+  ul {
+    list-style: none;
+    a {
+      text-decoration: none;
+      margin-bottom: 1.4em;
+      h4.title {
+        margin: 0;
+      }
+      p.date {
+        margin: 0;
+      }
+    }
+  }
+}
