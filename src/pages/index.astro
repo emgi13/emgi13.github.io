@@ -3,7 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import Logo3D from "../components/Logo3D";
+import Landing from "../components/landing/index.astro";
 ---
 
 <!doctype html>
@@ -14,7 +14,7 @@ import Logo3D from "../components/Logo3D";
 	<body class="Homepage">
 		<Header />
 		<main>
-			<Logo3D client:only="react" />
+			<Landing />
 		</main>
 		<Footer />
 	</body>
