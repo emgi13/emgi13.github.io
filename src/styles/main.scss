@@ -309,14 +309,19 @@ a.active.HeaderLink {
 }
 
 footer {
-  padding: 1em 0.5em;
-  text-align: center;
+  padding: 0.5em 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 .social-links {
-  display: flex;
+  display: inline-flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
   gap: 1em;
-  margin-top: 1em;
+  // margin-top: 1em;
 }
 .social-links a {
   text-decoration: none;
@@ -335,5 +340,5 @@ header {
 
 footer {
   background: var(--crust);
-  color: var(--lavender);
+  color: var(--sky);
 }
