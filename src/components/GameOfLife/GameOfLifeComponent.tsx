@@ -294,8 +294,8 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
       const y = p.mouseY;
       const w = p.width;
       const h = p.height;
-      if (x < 0 || x >= w) return false;
-      if (y < 0 || y >= h) return false;
+      if (x < 0 || x >= w) return true;
+      if (y < 0 || y >= h) return true;
       const i = Math.floor(x / this.step);
       const j = Math.floor(y / this.step);
       this.grid[i][j] = 1 - this.grid[i][j];
