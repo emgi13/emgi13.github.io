@@ -112,6 +112,7 @@ b {
 p {
   color: var(--text);
   margin-bottom: 1em;
+  text-align: justify;
 }
 a {
   color: var(--sky);
@@ -289,8 +290,24 @@ body.BlogPost {
     text-align: center;
     line-height: 1;
   }
+  .abstract {
+    h4 {
+      text-align: left;
+      font-size: 0.8em;
+      font-weight: lighter;
+    }
+    p {
+      margin-top: 0.2em;
+      font-size: 1em;
+    }
+  }
   .title h1 {
+    color: var(--green);
+  }
+  .title h2 {
     margin: 0 0 0.5em 0;
+    font-size: 1.1em;
+    color: var(--sapphire);
   }
   .date {
     margin-bottom: 0.5em;
