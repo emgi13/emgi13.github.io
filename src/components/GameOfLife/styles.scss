@@ -27,6 +27,12 @@
     align-items: stretch;
     > .speed {
       flex: 2;
+      > div {
+        margin: 0 auto;
+        width: fit-content;
+        font-size: 3em;
+        color: var(--teal);
+      }
     }
   }
   .bottom {
@@ -43,6 +49,9 @@
       align-items: stretch;
       > .size {
         flex: 4;
+        span.MuiSlider-markLabel {
+          color: inherit !important;
+        }
       }
     }
     .main {

@@ -10,10 +10,63 @@ import {
   Casino,
   Delete,
 } from "@mui/icons-material";
+import { Slider } from "@mui/material";
+
+const sizes = [5, 8, 12, 16, 25, 32, 64];
+const sizeMarks = sizes.map((v, i, a) => ({ value: i, label: `${v}x${v}` }));
+
+function VerticalAccessibleSlider() {
+  function preventHorizontalKeyboardNavigation(event: React.KeyboardEvent) {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+    }
+  }
+  return (
+    <Slider
+      sx={{
+        '& input[type="range"]': {
+          WebkitAppearance: "slider-vertical",
+        },
+      }}
+      orientation="vertical"
+      aria-label="Size"
+      track={false}
+      defaultValue={2}
+      step={null}
+      min={0}
+      max={sizes.length - 1}
+      marks={sizeMarks}
+      onKeyDown={preventHorizontalKeyboardNavigation}
+    />
+  );
+}
 
 type GameState = {
   play: boolean;
+  speed: number;
 };
+
+const speeds = [0.25, 0.5, 1, 2, 5, 10];
+
+const nextSpeed = (curr: number): number => {
+  const i = speeds.findIndex((v) => v === curr);
+  if (i === -1 || i === speeds.length) {
+    return curr;
+  } else {
+    return speeds.at(i + 1) || curr;
+  }
+};
+
+const prevSpeed = (curr: number): number => {
+  const i = speeds.findIndex((v) => v === curr);
+  if (i === -1 || i === 0) {
+    return curr;
+  } else {
+    return speeds.at(i - 1) || curr;
+  }
+};
+
+// WARN: There is a resize issue on resize update
 
 class GameOfLifeComponent extends React.Component<{}, GameState> {
   p5ref: React.RefObject<HTMLDivElement>;
@@ -23,6 +76,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     this.p5ref = React.createRef();
     this.state = {
       play: true,
+      speed: 1,
     };
   }
   render() {
@@ -46,15 +100,27 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
               this.setState({ play: false });
             }}
           />
-          <KeyboardDoubleArrowLeft />
-          <div className="speed"></div>
-          <KeyboardDoubleArrowRight />
+          <KeyboardDoubleArrowLeft
+            onClick={() => {
+              this.setState({ speed: prevSpeed(this.state.speed) });
+            }}
+          />
+          <div className="speed">
+            <div>{this.state.speed}x</div>
+          </div>
+          <KeyboardDoubleArrowRight
+            onClick={() => {
+              this.setState({ speed: nextSpeed(this.state.speed) });
+            }}
+          />
         </div>
         <div className="bottom">
           <div className="side">
             <Casino />
             <Delete />
-            <div className="size"></div>
+            <div className="size">
+              <VerticalAccessibleSlider />
+            </div>
           </div>
           <div className="main">
             <div className="canvas-cont" ref={this.p5ref}></div>
