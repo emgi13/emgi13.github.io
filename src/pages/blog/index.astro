@@ -26,16 +26,22 @@ const posts = (await getCollection("blog")).sort(
 						posts.map((post) => (
 							<li>
 								<a href={`/blog/${post.slug}/`}>
-									<img
-										width={720}
-										height={360}
-										src={post.data.heroImage}
-										alt=""
-									/>
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
+									<div class="effect">
+										{" "}
+										<img
+											width={720}
+											height={360}
+											src={post.data.heroImage}
+											alt=""
+										/>
+									</div>
+									<div class="title-row">
+										<h4 class="title">{post.data.title}</h4>
+										<p class="date">
+											<FormattedDate date={post.data.pubDate} />
+										</p>
+									</div>
+									<h6 class="subtitle">{post.data.subtitle}</h6>
 								</a>
 							</li>
 						))
