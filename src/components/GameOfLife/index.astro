@@ -1,13 +1,7 @@
 ---
 import GameOfLifeComponent from "./GameOfLifeComponent";
-import "./styles.scss";
 ---
 
-<div class="GameOfLife">
-  <div class="blank"></div>
-  <div class="top"></div>
-  <div class="side"></div>
-  <div class="canvas"><GameOfLifeComponent client:only="react" /></div>
-</div>
+<GameOfLifeComponent client:only="react" />
 
 <!-- <div><GameOfLifeComponent client:only="react" /></div> -->

@@ -1,5 +1,6 @@
 import React from "react";
 import p5 from "p5";
+import "./styles.scss";
 
 class GameOfLifeComponent extends React.Component {
   p5ref: React.RefObject<HTMLDivElement>;
@@ -9,7 +10,19 @@ class GameOfLifeComponent extends React.Component {
     this.p5ref = React.createRef();
   }
   render() {
-    return <div ref={this.p5ref}></div>;
+    return (
+      <div className="GameOfLife">
+        <div className="top"></div>
+        <div className="bottom">
+          <div className="side">
+            <div></div>
+          </div>
+          <div className="main">
+            <div className="canvas-cont" ref={this.p5ref}></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   componentDidMount(): void {
@@ -24,10 +37,10 @@ class GameOfLifeComponent extends React.Component {
 
   sketch = (p: p5) => {
     p.setup = () => {
-      p.createCanvas(
-        this.p5ref.current?.offsetWidth || 400,
-        this.p5ref.current?.offsetHeight || 400,
-      );
+      const width = this.p5ref.current?.offsetWidth || 400;
+      const height = this.p5ref.current?.offsetHeight || 400;
+
+      p.createCanvas(width, height);
       p.background(220);
     };
 
