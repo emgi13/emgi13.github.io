@@ -13,40 +13,60 @@ import {
 import { Slider } from "@mui/material";
 
 const sizes = [5, 8, 12, 16, 25, 32, 64];
-const sizeMarks = sizes.map((v, i, a) => ({ value: i, label: `${v}x${v}` }));
+const sizeMarks = sizes.map((v, i, a) => ({ value: i }));
 
-function VerticalAccessibleSlider() {
+function VerticalAccessibleSlider(props: {
+  value: number;
+  changeValue: (value: number) => void;
+}) {
   function preventHorizontalKeyboardNavigation(event: React.KeyboardEvent) {
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
     }
   }
+  const val = sizes.at(props.value);
   return (
-    <Slider
-      sx={{
-        '& input[type="range"]': {
-          WebkitAppearance: "slider-vertical",
-        },
-      }}
-      orientation="vertical"
-      aria-label="Size"
-      track={false}
-      defaultValue={2}
-      step={null}
-      min={0}
-      max={sizes.length - 1}
-      marks={sizeMarks}
-      onKeyDown={preventHorizontalKeyboardNavigation}
-    />
+    <div className="sizecont">
+      <div className="label">
+        {val}x{val}
+      </div>
+      <div className="slider">
+        <Slider
+          sx={{
+            '& input[type="range"]': {
+              WebkitAppearance: "slider-vertical",
+            },
+          }}
+          value={props.value}
+          onChange={(v) => {
+            // @ts-ignore value checked
+            const val = v.target?.value || 0;
+            if (val !== props.value) {
+              props.changeValue(val);
+            }
+          }}
+          orientation="vertical"
+          aria-label="Size"
+          track={false}
+          defaultValue={2}
+          step={null}
+          min={0}
+          max={sizes.length - 1}
+          marks={sizeMarks}
+          onKeyDown={preventHorizontalKeyboardNavigation}
+        />
+      </div>
+    </div>
   );
 }
 
 type GameState = {
   play: boolean;
   speed: number;
+  sizeInd: number;
 };
 
-const speeds = [0.25, 0.5, 1, 2, 5, 10];
+const speeds = [0.2, 0.5, 1, 2, 5, 10];
 
 const nextSpeed = (curr: number): number => {
   const i = speeds.findIndex((v) => v === curr);
@@ -77,6 +97,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     this.state = {
       play: true,
       speed: 1,
+      sizeInd: 3,
     };
   }
   render() {
@@ -119,7 +140,12 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
             <Casino />
             <Delete />
             <div className="size">
-              <VerticalAccessibleSlider />
+              <VerticalAccessibleSlider
+                value={this.state.sizeInd}
+                changeValue={(v) => {
+                  this.setState({ sizeInd: v });
+                }}
+              />
             </div>
           </div>
           <div className="main">
