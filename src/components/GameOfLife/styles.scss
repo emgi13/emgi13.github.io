@@ -71,8 +71,17 @@
             margin: 16px 0;
           }
         }
+        span.MuiSlider-root {
+          color: var(--surface1);
+        }
+        span.MuiSlider-thumb {
+          color: var(--maroon);
+        }
         span.MuiSlider-markLabel {
           display: none !important;
+        }
+        span.MuiSlider-mark {
+          color: var(--teal);
         }
       }
     }
