@@ -1,21 +1,60 @@
 import React from "react";
 import p5 from "p5";
 import "./styles.scss";
+import {
+  Pause,
+  PlayArrow,
+  SkipNext,
+  KeyboardDoubleArrowLeft,
+  KeyboardDoubleArrowRight,
+  Casino,
+  Delete,
+} from "@mui/icons-material";
 
-class GameOfLifeComponent extends React.Component {
+type GameState = {
+  play: boolean;
+};
+
+class GameOfLifeComponent extends React.Component<{}, GameState> {
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
   constructor(props: {}) {
     super(props);
     this.p5ref = React.createRef();
+    this.state = {
+      play: true,
+    };
   }
   render() {
     return (
       <div className="GameOfLife">
-        <div className="top"></div>
+        <div className="top">
+          <Pause
+            onClick={() => {
+              this.setState({ play: false });
+            }}
+            className={this.state.play ? "" : "active"}
+          />
+          <PlayArrow
+            onClick={() => {
+              this.setState({ play: true });
+            }}
+            className={this.state.play ? "active" : ""}
+          />
+          <SkipNext
+            onClick={() => {
+              this.setState({ play: false });
+            }}
+          />
+          <KeyboardDoubleArrowLeft />
+          <div className="speed"></div>
+          <KeyboardDoubleArrowRight />
+        </div>
         <div className="bottom">
           <div className="side">
-            <div></div>
+            <Casino />
+            <Delete />
+            <div className="size"></div>
           </div>
           <div className="main">
             <div className="canvas-cont" ref={this.p5ref}></div>
