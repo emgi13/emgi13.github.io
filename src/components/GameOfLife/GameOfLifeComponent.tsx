@@ -14,6 +14,8 @@ import { Slider } from "@mui/material";
 
 const sizes = [5, 8, 12, 16, 25, 32, 64];
 const sizeMarks = sizes.map((v, i, a) => ({ value: i }));
+const speeds = [0.2, 0.5, 1, 2, 5, 10];
+const base_framerate = 6;
 
 function VerticalAccessibleSlider(props: {
   value: number;
@@ -65,8 +67,6 @@ type GameState = {
   speed: number;
   sizeInd: number;
 };
-
-const speeds = [0.2, 0.5, 1, 2, 5, 10];
 
 const nextSpeed = (curr: number): number => {
   const i = speeds.findIndex((v) => v === curr);
@@ -135,18 +135,22 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
           <Pause
             onClick={() => {
               this.setState({ play: false });
+              this.pause();
             }}
             className={this.state.play ? "" : "active"}
           />
           <PlayArrow
             onClick={() => {
               this.setState({ play: true });
+              this.play();
             }}
             className={this.state.play ? "active" : ""}
           />
           <SkipNext
             onClick={() => {
               this.setState({ play: false });
+              this.pause();
+              this.nextStep();
             }}
           />
           <KeyboardDoubleArrowLeft
@@ -204,12 +208,24 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     }
   };
 
+  pause() {
+    this.p5?.frameRate(0);
+  }
+
+  play() {
+    this.p5?.frameRate(base_framerate * this.state.speed);
+  }
+
+  nextStep() {
+    this.p5?.draw();
+  }
+
   sketch = (p: p5) => {
     p.setup = () => {
       const width = this.p5ref.current?.offsetWidth || 400;
       const height = this.p5ref.current?.offsetHeight || 400;
 
-      p.frameRate(12 * this.state.speed);
+      p.frameRate(base_framerate * this.state.speed);
 
       p.createCanvas(width, height);
       p.background(0);
@@ -217,7 +233,6 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
 
     p.draw = () => {
       p.clear();
-      p.frameRate(12 * this.state.speed);
       this.makeGrid(true);
       // if (p.mouseIsPressed) {
       //   p.stroke(0);
