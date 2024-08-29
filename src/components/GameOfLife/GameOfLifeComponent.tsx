@@ -128,6 +128,23 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     }
     this.grid = grid;
   }
+
+  componentDidUpdate(
+    prevProps: Readonly<{}>,
+    prevState: Readonly<GameState>,
+    snapshot?: any,
+  ): void {
+    const { state } = this;
+    if (state.sizeInd !== prevState.sizeInd) {
+      this.makeGrid(true);
+      this.p5?.draw();
+    }
+    if (state.play) {
+      this.play();
+    } else {
+      this.pause();
+    }
+  }
   render() {
     return (
       <div className="GameOfLife">
@@ -135,21 +152,18 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
           <Pause
             onClick={() => {
               this.setState({ play: false });
-              this.pause();
             }}
             className={this.state.play ? "" : "active"}
           />
           <PlayArrow
             onClick={() => {
               this.setState({ play: true });
-              this.play();
             }}
             className={this.state.play ? "active" : ""}
           />
           <SkipNext
             onClick={() => {
               this.setState({ play: false });
-              this.pause();
               this.nextStep();
             }}
           />
@@ -169,8 +183,18 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
         </div>
         <div className="bottom">
           <div className="side">
-            <Casino />
-            <Delete />
+            <Casino
+              onClick={() => {
+                this.makeGrid(true);
+                this.p5?.draw();
+              }}
+            />
+            <Delete
+              onClick={() => {
+                this.makeGrid(false);
+                this.p5?.draw();
+              }}
+            />
             <div className="size">
               <VerticalAccessibleSlider
                 value={this.state.sizeInd}
@@ -228,12 +252,11 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
       p.frameRate(base_framerate * this.state.speed);
 
       p.createCanvas(width, height);
-      p.background(0);
+      p.background(0, 0, 0, 0);
     };
 
     p.draw = () => {
       p.clear();
-      this.makeGrid(true);
       // if (p.mouseIsPressed) {
       //   p.stroke(0);
       //   p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
@@ -241,6 +264,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
       p.fill(255);
       p.stroke(255);
       this.renderGrid(p);
+      this.makeGrid(true);
     };
   };
 }

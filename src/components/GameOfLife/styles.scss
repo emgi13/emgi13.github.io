@@ -68,6 +68,9 @@
             color: var(--teal);
             padding-top: 16px;
             line-height: 0.8em;
+            @media (max-width: 720px) {
+              font-size: 0.8em;
+            }
           }
           .slider {
             flex: 11;
