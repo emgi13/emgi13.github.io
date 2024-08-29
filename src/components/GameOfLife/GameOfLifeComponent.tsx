@@ -91,14 +91,42 @@ const prevSpeed = (curr: number): number => {
 class GameOfLifeComponent extends React.Component<{}, GameState> {
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
+  grid: number[][];
   constructor(props: {}) {
     super(props);
+
+    this.makeGrid = this.makeGrid.bind(this);
+
     this.p5ref = React.createRef();
     this.state = {
       play: true,
       speed: 1,
       sizeInd: 3,
     };
+    this.grid = [];
+
+    this.makeGrid(true);
+    console.log(this.grid);
+  }
+
+  get size(): number {
+    return sizes.at(this.state.sizeInd) || 0;
+  }
+
+  get step(): number {
+    return (this.p5?.width || 0) / this.size;
+  }
+
+  makeGrid(random: boolean = false) {
+    let grid = [];
+    for (let i = 0; i < this.size; i++) {
+      let row = [];
+      for (let j = 0; j < this.size; j++) {
+        row.push(random ? Math.round(Math.random()) : 0);
+      }
+      grid.push(row);
+    }
+    this.grid = grid;
   }
   render() {
     return (
@@ -166,20 +194,38 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     }
   }
 
+  renderGrid = (p: p5) => {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.grid[i][j] > 0) {
+          p.square(i * this.step, j * this.step, this.step);
+        }
+      }
+    }
+  };
+
   sketch = (p: p5) => {
     p.setup = () => {
       const width = this.p5ref.current?.offsetWidth || 400;
       const height = this.p5ref.current?.offsetHeight || 400;
 
+      p.frameRate(12 * this.state.speed);
+
       p.createCanvas(width, height);
-      p.background(220);
+      p.background(0);
     };
 
     p.draw = () => {
-      if (p.mouseIsPressed) {
-        p.stroke(0);
-        p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-      }
+      p.clear();
+      p.frameRate(12 * this.state.speed);
+      this.makeGrid(true);
+      // if (p.mouseIsPressed) {
+      //   p.stroke(0);
+      //   p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+      // }
+      p.fill(255);
+      p.stroke(255);
+      this.renderGrid(p);
     };
   };
 }
