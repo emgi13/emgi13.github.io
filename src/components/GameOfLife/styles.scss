@@ -34,6 +34,9 @@
       > div {
         width: fit-content;
         font-size: 3em;
+        @media (max-width: 720px) {
+          font-size: 2em;
+        }
         color: var(--teal);
       }
     }
