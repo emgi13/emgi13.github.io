@@ -137,7 +137,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     const { state } = this;
     if (state.sizeInd !== prevState.sizeInd) {
       this.makeGrid(true);
-      this.p5?.draw();
+      this.renderGrid();
     }
     if (state.play) {
       this.play();
@@ -165,6 +165,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
             onClick={() => {
               this.setState({ play: false });
               this.nextStep();
+              this.renderGrid();
             }}
           />
           <KeyboardDoubleArrowLeft
@@ -186,13 +187,13 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
             <Casino
               onClick={() => {
                 this.makeGrid(true);
-                this.p5?.draw();
+                this.renderGrid();
               }}
             />
             <Delete
               onClick={() => {
                 this.makeGrid(false);
-                this.p5?.draw();
+                this.renderGrid();
               }}
             />
             <div className="size">
@@ -222,7 +223,11 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     }
   }
 
-  renderGrid = (p: p5) => {
+  renderGrid = () => {
+    const p = this.p5!;
+    p.clear();
+    p.fill(255);
+    p.stroke(255);
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j] > 0) {
@@ -241,7 +246,31 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
   }
 
   nextStep() {
-    this.p5?.draw();
+    const { grid } = this;
+    const val = (i: number, j: number): number => {
+      if (i < 0 || i >= this.size || j < 0 || j >= this.size) return 0;
+      return grid[i][j];
+    };
+    let newGrid = structuredClone(grid);
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        const n =
+          val(i - 1, j - 1) +
+          val(i - 1, j) +
+          val(i - 1, j + 1) +
+          val(i, j - 1) +
+          val(i, j + 1) +
+          val(i + 1, j + 1) +
+          val(i + 1, j) +
+          val(i + 1, j - 1);
+        if (val(i, j) > 0) {
+          newGrid[i][j] = n < 2 || n > 3 ? 0 : 1;
+        } else {
+          newGrid[i][j] = n === 3 ? 1 : 0;
+        }
+      }
+    }
+    this.grid = newGrid;
   }
 
   sketch = (p: p5) => {
@@ -256,15 +285,22 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     };
 
     p.draw = () => {
-      p.clear();
-      // if (p.mouseIsPressed) {
-      //   p.stroke(0);
-      //   p.line(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-      // }
-      p.fill(255);
-      p.stroke(255);
-      this.renderGrid(p);
-      this.makeGrid(true);
+      this.nextStep();
+      this.renderGrid();
+    };
+
+    p.touchStarted = () => {
+      const x = p.mouseX;
+      const y = p.mouseY;
+      const w = p.width;
+      const h = p.height;
+      if (x < 0 || x >= w) return false;
+      if (y < 0 || y >= h) return false;
+      const i = Math.floor(x / this.step);
+      const j = Math.floor(y / this.step);
+      this.grid[i][j] = 1 - this.grid[i][j];
+      this.renderGrid();
+      return false;
     };
   };
 }
