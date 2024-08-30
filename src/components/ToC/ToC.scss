@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   z-index: 10;
-  padding-top: 1em;
+  padding-top: 10em;
   .sticker {
     display: flex;
     flex-direction: row;
@@ -34,7 +34,7 @@
       color: var(--rosewater);
       box-shadow: 0 0 4px 0 var(--crust);
       border-left: none;
-      padding: 12px;
+      padding: 12px 6px 12px 0;
       border-radius: 0 12px 12px 0;
 
       svg {
