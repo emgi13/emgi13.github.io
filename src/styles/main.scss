@@ -276,10 +276,12 @@ body.BlogPost {
     align-items: flex-start;
     width: 100%;
     .content {
+      padding-left: 1em;
       width: 100%;
     }
   }
   .hero-image {
+    padding-left: 1em;
     width: 100%;
   }
   .hero-image img {
