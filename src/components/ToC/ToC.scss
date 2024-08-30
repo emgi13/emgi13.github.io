@@ -48,10 +48,11 @@
     flex: 1;
     margin-top: 2rem;
     box-shadow: 0 0 4px 0 var(--crust);
-    min-height: 100vh;
+    min-height: 110vh;
     background: var(--crust);
     padding: 12px;
     box-sizing: border-box;
+    border-bottom-right-radius: 12px;
 
     &.closed {
       display: none;
