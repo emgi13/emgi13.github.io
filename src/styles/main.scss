@@ -267,6 +267,17 @@ body.BlogPost {
     width: calc(100% - 2em);
     max-width: 100%;
     margin: 0;
+    padding: 3em 1em 3em 0;
+  }
+  .content-cont {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
+    align-items: flex-start;
+    width: 100%;
+    .content {
+      width: 100%;
+    }
   }
   .hero-image {
     width: 100%;

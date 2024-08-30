@@ -1,0 +1,55 @@
+.ToC {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  align-items: flex-start;
+
+  //sticky
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  .toggle {
+    //sticky
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    flex: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    background: var(--crust);
+    margin-top: 2rem;
+    color: var(--rosewater);
+    box-shadow: 0 0 4px 0 var(--crust);
+    border-left: none;
+    padding: 12px;
+    border-radius: 0 12px 12px 0;
+
+    svg {
+      transform: rotate(90deg); /* Rotate the text to be right-side up */
+    }
+    span {
+      writing-mode: vertical-rl; /* Make the text flow vertically from bottom to top */
+      text-align: center; /* Center the text horizontally */
+    }
+  }
+  .links-cont {
+    flex: 1;
+    margin-top: 2rem;
+    box-shadow: 0 0 4px 0 var(--crust);
+    min-height: 100vh;
+    background: var(--crust);
+    padding: 12px;
+    box-sizing: border-box;
+
+    &.closed {
+      display: none;
+    }
+  }
+}

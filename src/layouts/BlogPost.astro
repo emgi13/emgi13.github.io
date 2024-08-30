@@ -4,6 +4,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
+import ToC from "../components/ToC/index.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -27,33 +28,38 @@ const { title, subtitle, abstract, pubDate, updatedDate, heroImage } =
 						)
 					}
 				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						{subtitle && <h2 class="subtitle">{subtitle}</h2>}
-						<hr />
-						{
-							abstract && (
-								<div class="abstract">
-									<h4>
-										<em>ABSTRACT</em>
-									</h4>
-									<p>{abstract}</p>
+				<div class="content-cont">
+					<ToC />
+					<div class="content">
+						<div class="prose">
+							<div class="title">
+								<div class="date">
+									<FormattedDate date={pubDate} />
+									{
+										updatedDate && (
+											<div class="last-updated-on">
+												Last updated on <FormattedDate date={updatedDate} />
+											</div>
+										)
+									}
 								</div>
-							)
-						}
+								<h1>{title}</h1>
+								{subtitle && <h2 class="subtitle">{subtitle}</h2>}
+								<hr />
+								{
+									abstract && (
+										<div class="abstract">
+											<h4>
+												<em>ABSTRACT</em>
+											</h4>
+											<p>{abstract}</p>
+										</div>
+									)
+								}
+							</div>
+							<slot />
+						</div>
 					</div>
-					<slot />
 				</div>
 			</article>
 		</main>
