@@ -59,6 +59,23 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
+        .nav-link {
+          display: flex;
+          padding: 0;
+          flex-direction: row;
+          justify-content: stretch;
+          align-items: stretch;
+          width: 100%;
+          background: none;
+          border: none;
+          div {
+            border: 1px solid var(--crust);
+          }
+          span {
+            display: block;
+            text-align: left;
+          }
+        }
       }
 
       &.closed {

@@ -17,7 +17,7 @@ class ToC extends React.Component<{}, ToCState> {
 
   get headings() {
     const prose = document.querySelector(".prose")!;
-    const targets = prose.querySelectorAll("h1, h2, h3");
+    const targets = prose.querySelectorAll("h2, h3");
     const headings = Array.from(targets)
       .map((h) => ({
         id: h.id,
@@ -35,7 +35,28 @@ class ToC extends React.Component<{}, ToCState> {
           <div className={"links-cont " + (open ? "" : "closed")}>
             <div className="links">
               {this.headings.map((h) => (
-                <a href={"#" + h.id}>{h.text}</a>
+                <button
+                  className="nav-link"
+                  onClick={() => {
+                    this.setState({ open: false });
+                    document.querySelector(`#${h.id}`)!.scrollIntoView({
+                      behavior: "auto",
+                      block: "start",
+                      inline: "nearest",
+                    });
+                  }}
+                >
+                  <div
+                    className={"indent-" + h.level}
+                    style={{ flex: h.level }}
+                  ></div>
+                  <span
+                    className={"size-" + h.level}
+                    style={{ flex: 64 - h.level }}
+                  >
+                    {h.text}
+                  </span>
+                </button>
               ))}
             </div>
           </div>
