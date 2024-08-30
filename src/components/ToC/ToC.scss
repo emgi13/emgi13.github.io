@@ -40,6 +40,11 @@
     }
   }
   .links-cont {
+    //sticky
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
     flex: 1;
     margin-top: 2rem;
     box-shadow: 0 0 4px 0 var(--crust);
@@ -51,5 +56,16 @@
     &.closed {
       display: none;
     }
+  }
+}
+
+@media (max-width: 850px) {
+  div:has(.ToC) {
+    position: relative;
+  }
+  .ToC {
+    position: absolute;
+    left: 0;
+    z-index: 10;
   }
 }
