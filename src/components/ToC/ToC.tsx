@@ -15,6 +15,21 @@ function isVisible(el: Element) {
   const rect = el.getBoundingClientRect();
   return rect.top <= window.innerHeight;
 }
+function showOverlay() {
+  const overlay = document.getElementById("overlay")!;
+  const body = document.body;
+
+  overlay.style.display = "block";
+  body.style.overflow = "hidden";
+}
+
+function hideOverlay() {
+  const overlay = document.getElementById("overlay")!;
+  const body = document.body;
+
+  overlay.style.display = "none";
+  body.style.overflow = "";
+}
 
 class ToC extends React.Component<{}, ToCState> {
   constructor(props: {}) {
@@ -22,6 +37,10 @@ class ToC extends React.Component<{}, ToCState> {
     this.state = {
       open: false,
     };
+    document.getElementById("overlay")?.addEventListener("click", () => {
+      this.setState({ open: false });
+      return false;
+    });
   }
 
   get headings() {
@@ -39,6 +58,11 @@ class ToC extends React.Component<{}, ToCState> {
   }
   render() {
     const { open } = this.state;
+    if (open) {
+      showOverlay();
+    } else {
+      hideOverlay();
+    }
     return (
       <div className="ToC">
         <div className="sticker">

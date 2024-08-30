@@ -373,3 +373,14 @@ footer {
   background: var(--crust);
   color: var(--sky);
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  opacity: 0.6;
+  z-index: 9; /* Make sure it's above other content */
+  display: none; /* Initially hidden */
+}
