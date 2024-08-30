@@ -106,7 +106,6 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
     this.grid = [];
 
     this.makeGrid(true);
-    console.log(this.grid);
   }
 
   get size(): number {
