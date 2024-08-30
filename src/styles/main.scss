@@ -271,6 +271,7 @@ body.BlogPost {
   }
   .content-cont {
     display: flex;
+    position: relative;
     flex-direction: row;
     justify-content: stretch;
     align-items: flex-start;
