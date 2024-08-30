@@ -7,6 +7,15 @@ type ToCState = {
   open: boolean;
 };
 
+function isRead(el: Element) {
+  const rect = el.getBoundingClientRect();
+  return rect.top <= 0;
+}
+function isVisible(el: Element) {
+  const rect = el.getBoundingClientRect();
+  return rect.top <= window.innerHeight;
+}
+
 class ToC extends React.Component<{}, ToCState> {
   constructor(props: {}) {
     super(props);
@@ -23,6 +32,7 @@ class ToC extends React.Component<{}, ToCState> {
         id: h.id,
         text: h.textContent,
         level: parseInt(h.tagName.replace("H", ""), 10),
+        visible: isVisible(h) ? (isRead(h) ? "read" : "visible") : "unread",
       }))
       .filter((h) => !!h.id);
     return headings;
@@ -47,12 +57,12 @@ class ToC extends React.Component<{}, ToCState> {
                   }}
                 >
                   <div
-                    className={"indent-" + h.level}
+                    className={"indent-" + h.level + " " + h.visible}
                     style={{ flex: h.level }}
                   ></div>
                   <span
                     className={"size-" + h.level}
-                    style={{ flex: 64 - h.level }}
+                    style={{ flex: 128 - h.level }}
                   >
                     {h.text}
                   </span>

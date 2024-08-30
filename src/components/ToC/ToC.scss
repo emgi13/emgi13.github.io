@@ -68,12 +68,30 @@
           width: 100%;
           background: none;
           border: none;
+          border-bottom: 1px solid var(--mauve);
           div {
-            border: 1px solid var(--crust);
+            &.read {
+              background: var(--green);
+            }
+            &.visible {
+              background: var(--peach);
+            }
+            &.unread {
+              background: var(--overlay0);
+            }
           }
           span {
             display: block;
             text-align: left;
+            padding: 2px 8px;
+            &.size-2 {
+              font-size: 1.2rem;
+              color: var(--text);
+            }
+            &.size-3 {
+              color: var(--subtext0);
+              font-size: 1.1rem;
+            }
           }
         }
       }
