@@ -69,7 +69,11 @@
           width: 100%;
           background: none;
           border: none;
+          cursor: pointer;
           border-bottom: 1px solid var(--mauve);
+          &:hover span {
+            color: var(--lavender) !important;
+          }
           div {
             &.read {
               background: var(--green);
