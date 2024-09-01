@@ -179,6 +179,14 @@ kbd {
   padding: 0 4px;
   border-radius: 4px;
 }
+//Footnotes
+section[data-footnotes] {
+  background: var(--surface0);
+  padding: 0 8px;
+  p {
+    margin: 10px 0;
+  }
+}
 
 @media (max-width: 720px) {
   body {
