@@ -199,7 +199,7 @@ export const Figure2 = () => {
       Ky: 22,
     },
     { a: 0, aa: 5, s: 3, y: 0 },
-    80,
+    50,
   );
   const leopard = new Fig2(
     {
@@ -217,7 +217,7 @@ export const Figure2 = () => {
       Ky: 22,
     },
     { a: 0, aa: 2, s: 2.5, y: 0 },
-    80,
+    50,
   );
   const cheetah = new Fig2(
     {
@@ -235,21 +235,13 @@ export const Figure2 = () => {
       Ky: 22,
     },
     { a: 0, aa: 2, s: 2.5, y: 0 },
-    80,
+    50,
   );
   return (
     <div className="fig fig2">
-      <TuringPattern runner={giraffe} frame_rate={30} skip_frames={10} />
-      <TuringPattern
-        runner={leopard}
-        frame_rate={FRAME_RATE}
-        skip_frames={20}
-      />
-      <TuringPattern
-        runner={cheetah}
-        frame_rate={FRAME_RATE}
-        skip_frames={20}
-      />
+      <TuringPattern runner={giraffe} frame_rate={20} skip_frames={2} />
+      <TuringPattern runner={leopard} frame_rate={20} skip_frames={2} />
+      <TuringPattern runner={cheetah} frame_rate={20} skip_frames={2} />
     </div>
   );
 };

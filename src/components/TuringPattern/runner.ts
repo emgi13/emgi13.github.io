@@ -162,7 +162,7 @@ export class Fig2 implements Runner<Fig2_layers, Fig2_vars> {
     vars: fig2_vars_type,
     init_val: { a: number; aa: number; s: number; y: number },
     size: number = 50,
-    seed: number = 1,
+    seed: number = 2938109238102,
     fluc: number = 3,
     dx: number = 1,
     dt: number = 1,
@@ -175,7 +175,7 @@ export class Fig2 implements Runner<Fig2_layers, Fig2_vars> {
     this.dt = dt;
     this.steady = { a: 0, s: 0, y: 0 };
 
-    const rng = rngWithMinMax(this.seed, 0, 30);
+    const rng = rngWithMinMax(this.seed, 0, 3000);
 
     // INFO: make the initial grid
     let a_grid = [];
