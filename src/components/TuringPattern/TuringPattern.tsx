@@ -5,7 +5,9 @@ import { Fig1, type Runner } from "./runner";
 import { makeImage } from "./utils";
 
 const FRAME_RATE = 15;
-const SKIP_FRAMES = 30;
+const SKIP_FRAMES = 20;
+const FRAME_SCALE = 0.95;
+const BLUR_SIZE = 5;
 
 // INFO: interface creation
 // add specific classes for each figure,
@@ -76,10 +78,16 @@ class TuringPattern<
       // get the image
       const img = makeImage(p, runner.grids[layer], runner.size);
       // put the image on the canvas
-      p.image(img, 0, i * width, width, width);
+      p.image(
+        img,
+        ((1 - FRAME_SCALE) / 2) * width,
+        i * width + ((1 - FRAME_SCALE) / 2) * width,
+        width * FRAME_SCALE,
+        width * FRAME_SCALE,
+      );
       i += 1;
     }
-    p.filter(p.BLUR, 10);
+    p.filter(p.BLUR, BLUR_SIZE);
   }
 
   sketch = (p: p5) => {
