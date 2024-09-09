@@ -162,7 +162,7 @@ export class Fig2 implements Runner<Fig2_layers, Fig2_vars> {
     vars: fig2_vars_type,
     init_val: { a: number; aa: number; s: number; y: number },
     size: number = 50,
-    seed: number = 2938109238102,
+    seed: number = Math.random(),
     fluc: number = 3,
     dx: number = 1,
     dt: number = 1,
