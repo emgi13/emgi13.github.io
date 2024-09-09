@@ -68,9 +68,10 @@ class ToC extends React.Component<{}, ToCState> {
         <div className="sticker">
           <div className={"links-cont " + (open ? "" : "closed")}>
             <div className="links">
-              {this.headings.map((h) => (
+              {this.headings.map((h, ind) => (
                 <button
                   className="nav-link"
+                  key={ind}
                   onClick={() => {
                     this.setState({ open: false });
                     document.querySelector(`#${h.id}`)!.scrollIntoView({
