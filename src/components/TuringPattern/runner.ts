@@ -67,8 +67,8 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     const aa_func = (a: number) => {
       return (
         (this.vars.Ra * a * a * this.vars.Mh) /
-          (1 + this.vars.Ka * a * a) /
-          (this.vars.Rh * a * a) -
+        (1 + this.vars.Ka * a * a) /
+        (this.vars.Rh * a * a) -
         this.vars.Ma * a +
         this.vars.Sa
       );
@@ -79,7 +79,7 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     const hh = (this.vars.Rh * aa * aa) / this.vars.Mh;
 
     this.steady = { a: aa, h: hh };
-    console.log("Steady", this.steady);
+    // console.log("Steady", this.steady);
 
     const rng = rngWithMinMax(seed, (100 - fluc) / 100, (100 + fluc) / 100);
 
@@ -97,7 +97,7 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
       h_grid.push(h_row);
     }
     this.grids = { a: a_grid, h: h_grid };
-    console.info("Grids", this.grids);
+    // console.info("Grids", this.grids);
     this.step = this.step.bind(this);
   }
   step() {

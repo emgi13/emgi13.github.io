@@ -34,7 +34,7 @@ export function getRoot(
   let i = 0;
   const g = getSlope(f, dx);
   while (Math.abs(f(x)) > dy) {
-    console.log(x, f(x), g(x));
+    // console.log(x, f(x), g(x));
     x -= f(x) / g(x);
     i += 1;
     if (i > 100) {

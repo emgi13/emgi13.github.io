@@ -69,7 +69,7 @@ class TuringPattern<
   }
 
   renderFrame() {
-    console.log("render");
+    // console.log("render");
     const { runner } = this.props;
     const p = this.p5!;
     const width = p.width;
@@ -124,7 +124,7 @@ class TuringPattern<
 
   componentDidMount(): void {
     this.p5 = new p5(this.sketch, this.p5ref.current as HTMLElement);
-    console.log(this.p5);
+    // console.log(this.p5);
   }
 
   componentWillUnmount(): void {
