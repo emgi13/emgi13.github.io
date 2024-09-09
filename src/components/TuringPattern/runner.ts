@@ -15,7 +15,7 @@ export interface Runner<L extends string, V extends string> {
 
 type Fig1_layers = "a" | "h";
 
-type Fig1_vars = "Da" | "Ra" | "Ma" | "Ka" | "Sa" | "Dh" | "Rh" | "Mh" | "Sh";
+type Fig1_vars = "Da" | "Ra" | "Ma" | "Ka" | "Sa" | "Dh" | "Rh" | "Mh";
 
 const rngWithMinMax = (seed: number, min: number, max: number) => {
   const rng = seedrandom(`${seed}`);
@@ -35,31 +35,29 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     Dh: number;
     Rh: number;
     Mh: number;
-    Sh: number;
   };
   steady: { a: number; h: number };
   fluc: number;
   dx: number;
   dt: number;
   constructor(
-    size: number = 30,
-    seed: number = 0,
-    fluc: number = 7,
+    size: number = 50,
+    seed: number = 1,
+    fluc: number = 3,
     dx: number = 1,
     dt: number = 1,
   ) {
     this.size = size;
     this.seed = seed;
     this.vars = {
-      Da: 1,
-      Ra: 1,
-      Dh: 1,
-      Ka: 1,
-      Ma: 1,
-      Mh: 1,
-      Rh: 1,
-      Sa: 1,
-      Sh: 1,
+      Da: 0.005,
+      Ra: 0.01,
+      Ma: 0.01,
+      Sa: 0,
+      Ka: 0.0,
+      Dh: 0.2,
+      Rh: 0.02,
+      Mh: 0.02,
     };
     this.fluc = fluc;
     this.dx = dx;
@@ -69,18 +67,19 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     const aa_func = (a: number) => {
       return (
         (this.vars.Ra * a * a * this.vars.Mh) /
-          (1 + this.vars.Ka * a * a) /
-          (this.vars.Rh * a * a + this.vars.Sh) -
+        (1 + this.vars.Ka * a * a) /
+        (this.vars.Rh * a * a) -
         this.vars.Ma * a +
         this.vars.Sa
       );
     };
 
-    const aa = getRoot(aa_func, 1, 1e-6, 1e-6);
+    const aa = getRoot(aa_func, 0.2, 1e-3, 1e-10);
 
-    const hh = (this.vars.Rh * aa * aa + this.vars.Sh) / this.vars.Mh;
+    const hh = (this.vars.Rh * aa * aa) / this.vars.Mh;
 
     this.steady = { a: aa, h: hh };
+    console.log("Steady", this.steady);
 
     const rng = rngWithMinMax(seed, (100 - fluc) / 100, (100 + fluc) / 100);
 
@@ -98,6 +97,7 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
       h_grid.push(h_row);
     }
     this.grids = { a: a_grid, h: h_grid };
+    console.info("Grids", this.grids);
     this.step = this.step.bind(this);
   }
   step() {
@@ -107,20 +107,19 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
       for (let j = 0; j < this.size; j++) {
         const a = this.grids.a[i][j];
         const h = this.grids.h[i][j];
-        a_grid[i][j] =
+        a_grid[i][j] +=
           this.dt *
           (this.vars.Da *
             Laplace((x, y) => getPBC(this.grids.a, x, y), i, j, this.dx) +
             (this.vars.Ra * a * a) / (1 + this.vars.Ka * a * a) / h -
             this.vars.Ma * a +
             this.vars.Sa);
-        h_grid[i][j] =
+        h_grid[i][j] +=
           this.dt *
           (this.vars.Dh *
             Laplace((x, y) => getPBC(this.grids.h, x, y), i, j, this.dx) +
             this.vars.Rh * a * a -
-            this.vars.Mh * h +
-            this.vars.Sh);
+            this.vars.Mh * h);
       }
     }
     this.grids = { a: a_grid, h: h_grid };

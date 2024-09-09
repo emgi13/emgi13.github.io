@@ -31,9 +31,15 @@ export function getRoot(
   dy: number,
 ): number {
   let x = x0;
+  let i = 0;
   const g = getSlope(f, dx);
-  while (Math.abs(x) > dy) {
+  while (Math.abs(f(x)) > dy) {
+    console.log(x, f(x), g(x));
     x -= f(x) / g(x);
+    i += 1;
+    if (i > 100) {
+      throw new Error("Root Calculation : Iterations exceded");
+    }
   }
   return x;
 }
@@ -45,7 +51,7 @@ export function Laplace(
   dx: number,
 ) {
   const sum =
-    getter(i - i, j) + getter(i + 1, j) + getter(i, j - 1) + getter(i, j + 1);
+    getter(i - 1, j) + getter(i + 1, j) + getter(i, j - 1) + getter(i, j + 1);
   return (sum - 4 * getter(i, j)) / (dx * dx);
 }
 
@@ -73,7 +79,12 @@ export function findMinMax(
   return { min, max };
 }
 
-export function makeImage(p: p5, grid: number[][], size: number): p5.Image {
+export function makeImage(
+  p: p5,
+  grid: number[][],
+  size: number,
+  invert: boolean = true,
+): p5.Image {
   // Create an image object
   let img = p.createImage(size, size);
   img.loadPixels();
@@ -84,7 +95,8 @@ export function makeImage(p: p5, grid: number[][], size: number): p5.Image {
   // Set pixel values based on the 2D array
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
-      let brightness = grid[i][j];
+      let brightness = p.map(grid[i][j], min, max, 0, 255);
+      if (invert) brightness = 255 - brightness;
       let index = (j + i * size) * 4; // Calculate pixel index
       img.pixels[index] = brightness; // Red
       img.pixels[index + 1] = brightness; // Green

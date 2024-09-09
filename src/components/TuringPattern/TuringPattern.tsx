@@ -1,7 +1,8 @@
 import p5 from "p5";
 import React from "react";
 import "./TuringPattern.scss";
-import type { Runner } from "./runner";
+import { Fig1, type Runner } from "./runner";
+import { makeImage } from "./utils";
 
 // INFO: interface creation
 // add specific classes for each figure,
@@ -16,7 +17,7 @@ import type { Runner } from "./runner";
 // runner should not appear on the top of the page,
 // runners for each section instead.
 
-export class TuringPattern<
+class TuringPattern<
   L extends string,
   V extends string,
 > extends React.Component<{ runner: Runner<L, V> }> {
@@ -27,18 +28,48 @@ export class TuringPattern<
     super(props);
     // Initializers
     this.p5ref = React.createRef();
+
+    // Method bindings for this object
+    this.calcFrame = this.calcFrame.bind(this);
+    this.renderFrame = this.renderFrame.bind(this);
+  }
+
+  calcFrame() {
+    const { runner } = this.props;
+    const SKIP_FRAMES = 5;
+    for (let i = 0; i < SKIP_FRAMES; i++) {
+      runner.step();
+    }
+  }
+
+  renderFrame() {
+    const { runner } = this.props;
+    const width = this.p5!.width;
+    let i = 0;
+    for (const layer in runner.grids) {
+      // get the image
+      const img = makeImage(this.p5!, runner.grids[layer], runner.size);
+      // put the image on the canvas
+      this.p5!.image(img, 0, i * width, width, width);
+      i += 1;
+    }
   }
 
   sketch = (p: p5) => {
     p.setup = () => {
-      const height = this.p5ref.current?.offsetWidth || 400;
-      const width = this.p5ref.current?.offsetHeight || 400;
+      const layers = Object.keys(this.props.runner.grids).length;
+      const width = this.p5ref.current?.offsetWidth || 400;
+      const height = width * layers;
       p.frameRate(12);
       p.createCanvas(width, height);
       p.background(0, 0, 0, 0);
     };
 
-    p.draw = () => { };
+    p.draw = () => {
+      p.clear();
+      this.calcFrame();
+      this.renderFrame();
+    };
   };
 
   componentDidMount(): void {
@@ -59,3 +90,8 @@ export class TuringPattern<
     );
   }
 }
+
+export const Figure1 = () => {
+  const runner = new Fig1();
+  return <TuringPattern runner={runner} />;
+};
