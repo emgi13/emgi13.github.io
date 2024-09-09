@@ -4,6 +4,9 @@ import "./TuringPattern.scss";
 import { Fig1, type Runner } from "./runner";
 import { makeImage } from "./utils";
 
+const FRAME_RATE = 15;
+const SKIP_FRAMES = 30;
+
 // INFO: interface creation
 // add specific classes for each figure,
 // customize the runner,
@@ -24,35 +27,59 @@ class TuringPattern<
   // INFO: Make this generic and have it accept a runner prop.
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
+  active: boolean;
+  debounceTimeout: NodeJS.Timeout | undefined;
+
   constructor(props: { runner: Runner<L, V> }) {
     super(props);
     // Initializers
     this.p5ref = React.createRef();
+    this.active = false;
 
     // Method bindings for this object
     this.calcFrame = this.calcFrame.bind(this);
     this.renderFrame = this.renderFrame.bind(this);
+    this.canvasInView = this.canvasInView.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.handleScrollDebounced = this.handleScrollDebounced.bind(this);
+  }
+  handleScrollDebounced() {
+    clearTimeout(this.debounceTimeout);
+    this.debounceTimeout = setTimeout(this.handleScroll, 10); // Adjust the delay as needed
+  }
+
+  handleScroll() {
+    const inView = this.canvasInView();
+    if (this.active && !inView) {
+      this.p5!.frameRate(0);
+      this.active = false;
+    } else if (!this.active && inView) {
+      this.p5!.frameRate(FRAME_RATE);
+      this.active = true;
+    }
   }
 
   calcFrame() {
     const { runner } = this.props;
-    const SKIP_FRAMES = 5;
     for (let i = 0; i < SKIP_FRAMES; i++) {
       runner.step();
     }
   }
 
   renderFrame() {
+    console.log("render");
     const { runner } = this.props;
-    const width = this.p5!.width;
+    const p = this.p5!;
+    const width = p.width;
     let i = 0;
     for (const layer in runner.grids) {
       // get the image
-      const img = makeImage(this.p5!, runner.grids[layer], runner.size);
+      const img = makeImage(p, runner.grids[layer], runner.size);
       // put the image on the canvas
-      this.p5!.image(img, 0, i * width, width, width);
+      p.image(img, 0, i * width, width, width);
       i += 1;
     }
+    p.filter(p.BLUR, 10);
   }
 
   sketch = (p: p5) => {
@@ -60,9 +87,12 @@ class TuringPattern<
       const layers = Object.keys(this.props.runner.grids).length;
       const width = this.p5ref.current?.offsetWidth || 400;
       const height = width * layers;
-      p.frameRate(12);
       p.createCanvas(width, height);
       p.background(0, 0, 0, 0);
+      p.frameRate(0);
+      window.addEventListener("scroll", this.handleScrollDebounced, {
+        passive: true,
+      });
     };
 
     p.draw = () => {
@@ -72,8 +102,21 @@ class TuringPattern<
     };
   };
 
+  canvasInView() {
+    const canvas = this.p5ref.current!;
+    const rect = canvas.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    // Check if any part of the canvas is within the viewport
+    return (
+      rect.bottom > 0 && // Bottom edge is below the top of the viewport
+      rect.top < windowHeight // Top edge is above the bottom of the viewport
+    );
+  } //
+
   componentDidMount(): void {
     this.p5 = new p5(this.sketch, this.p5ref.current as HTMLElement);
+    console.log(this.p5);
   }
 
   componentWillUnmount(): void {

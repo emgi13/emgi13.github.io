@@ -54,7 +54,7 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
       Ra: 0.01,
       Ma: 0.01,
       Sa: 0,
-      Ka: 0.0,
+      Ka: 0.25,
       Dh: 0.2,
       Rh: 0.02,
       Mh: 0.02,
@@ -67,8 +67,8 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     const aa_func = (a: number) => {
       return (
         (this.vars.Ra * a * a * this.vars.Mh) /
-        (1 + this.vars.Ka * a * a) /
-        (this.vars.Rh * a * a) -
+          (1 + this.vars.Ka * a * a) /
+          (this.vars.Rh * a * a) -
         this.vars.Ma * a +
         this.vars.Sa
       );
