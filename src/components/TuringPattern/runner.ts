@@ -18,11 +18,11 @@ type Fig1_layers = "a" | "h";
 type Fig1_vars = "Da" | "Ra" | "Ma" | "Ka" | "Sa" | "Dh" | "Rh" | "Mh" | "Sh";
 
 const rngWithMinMax = (seed: number, min: number, max: number) => {
-  const rng = seedrandom(seed);
+  const rng = seedrandom(`${seed}`);
   return () => min + (max - min) * rng();
 };
 
-class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
+export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
   size: number;
   seed: number;
   grids: { a: number[][]; h: number[][] };
@@ -69,8 +69,8 @@ class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
     const aa_func = (a: number) => {
       return (
         (this.vars.Ra * a * a * this.vars.Mh) /
-        (1 + this.vars.Ka * a * a) /
-        (this.vars.Rh * a * a + this.vars.Sh) -
+          (1 + this.vars.Ka * a * a) /
+          (this.vars.Rh * a * a + this.vars.Sh) -
         this.vars.Ma * a +
         this.vars.Sa
       );
