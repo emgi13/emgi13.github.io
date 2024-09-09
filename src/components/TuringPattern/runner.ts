@@ -1,5 +1,4 @@
-import { getPBC, getRoot, Laplace } from "./utils";
-import seedrandom from "seedrandom";
+import { getPBC, getRoot, Laplace, rngWithMinMax } from "./utils";
 
 export interface Runner<L extends string, V extends string> {
   grids: { [Layer in L]: number[][] };
@@ -13,14 +12,11 @@ export interface Runner<L extends string, V extends string> {
   dt: number;
 }
 
+// INFO: Figure 1 : Eq 1
+
 type Fig1_layers = "a" | "h";
 
 type Fig1_vars = "Da" | "Ra" | "Ma" | "Ka" | "Sa" | "Dh" | "Rh" | "Mh";
-
-const rngWithMinMax = (seed: number, min: number, max: number) => {
-  const rng = seedrandom(`${seed}`);
-  return () => min + (max - min) * rng();
-};
 
 export type fig1_vars_type = {
   Da: number;
@@ -117,5 +113,123 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
       }
     }
     this.grids = { a: a_grid, h: h_grid };
+  }
+}
+
+// INFO: Fig2 : Eq 8
+
+type Fig2_layers = "a" | "s" | "y";
+
+type Fig2_vars =
+  | "Da"
+  | "Ra"
+  | "Ka"
+  | "Ds"
+  | "Ss"
+  | "Ks"
+  | "Rs"
+  | "Ms"
+  | "Ry"
+  | "Ky"
+  | "My"
+  | "Sy";
+
+export type fig2_vars_type = {
+  Da: number;
+  Ra: number;
+  Ka: number;
+  Ds: number;
+  Ss: number;
+  Ks: number;
+  Rs: number;
+  Ms: number;
+  Ry: number;
+  Ky: number;
+  My: number;
+  Sy: number;
+};
+
+export class Fig2 implements Runner<Fig2_layers, Fig2_vars> {
+  size: number;
+  dt: number;
+  seed: number;
+  grids: { a: number[][]; s: number[][]; y: number[][] };
+  vars: fig2_vars_type;
+  steady: { a: number; s: number; y: number };
+  fluc: number;
+  dx: number;
+  constructor(
+    vars: fig2_vars_type,
+    init_val: { a: number; aa: number; s: number; y: number },
+    size: number = 50,
+    seed: number = 1,
+    fluc: number = 3,
+    dx: number = 1,
+    dt: number = 1,
+  ) {
+    this.size = size;
+    this.seed = seed;
+    this.vars = vars;
+    this.fluc = fluc;
+    this.dx = dx;
+    this.dt = dt;
+    this.steady = { a: 0, s: 0, y: 0 };
+
+    const rng = rngWithMinMax(this.seed, 0, 30);
+
+    // INFO: make the initial grid
+    let a_grid = [];
+    let s_grid = [];
+    let y_grid = [];
+    for (let i = 0; i < this.size; i++) {
+      let a_row = [];
+      let s_row = [];
+      let y_row = [];
+      for (let j = 0; j < this.size; j++) {
+        if (rng() < 10) {
+          a_row.push(init_val.aa);
+        } else {
+          a_row.push(init_val.a);
+        }
+        s_row.push(init_val.s);
+        y_row.push(init_val.y);
+      }
+      a_grid.push(a_row);
+      s_grid.push(s_row);
+      y_grid.push(y_row);
+    }
+    this.grids = { a: a_grid, s: s_grid, y: y_grid };
+    this.step = this.step.bind(this);
+  }
+  step() {
+    const vars = this.vars;
+    let a_grid = structuredClone(this.grids.a);
+    let s_grid = structuredClone(this.grids.s);
+    let y_grid = structuredClone(this.grids.y);
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        const a = this.grids.a[i][j];
+        const s = this.grids.s[i][j];
+        const y = this.grids.y[i][j];
+        a_grid[i][j] +=
+          this.dt *
+          (vars.Da *
+            Laplace((x, y) => getPBC(this.grids.a, x, y), i, j, this.dx) +
+            vars.Ra * ((a * a * s) / (1 + vars.Ka * a * a) - a));
+        s_grid[i][j] +=
+          this.dt *
+          (vars.Ds *
+            Laplace((x, y) => getPBC(this.grids.s, x, y), i, j, this.dx) +
+            vars.Ss / (1 + vars.Ks * y) -
+            (vars.Rs * a * a * s) / (1 + vars.Ka * a * a) -
+            vars.Ms * s);
+        y_grid[i][j] +=
+          this.dt *
+          ((vars.Ry * y * y) / (1 + vars.Ky * y * y) -
+            vars.My * y +
+            vars.Sy * a);
+      }
+    }
+    this.grids = { a: a_grid, s: s_grid, y: y_grid };
   }
 }

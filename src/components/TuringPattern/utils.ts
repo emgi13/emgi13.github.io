@@ -1,4 +1,5 @@
 import type p5 from "p5";
+import seedrandom from "seedrandom";
 
 // INFO: get Periodic Boundary Conditions
 export function getPBC(grid: number[][], i: number, j: number): number {
@@ -114,3 +115,8 @@ export function makeImage(
   img.updatePixels(); // Update the image with new pixel data
   return img;
 }
+
+export const rngWithMinMax = (seed: number, min: number, max: number) => {
+  const rng = seedrandom(`${seed}`);
+  return () => min + (max - min) * rng();
+};

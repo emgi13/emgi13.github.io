@@ -1,7 +1,7 @@
 import p5 from "p5";
 import React from "react";
 import "./TuringPattern.scss";
-import { Fig1, type fig1_vars_type, type Runner } from "./runner";
+import { Fig1, Fig2, type fig1_vars_type, type Runner } from "./runner";
 import { makeImage } from "./utils";
 
 const FRAME_RATE = 15;
@@ -25,14 +25,22 @@ const BLUR_SIZE = 5;
 class TuringPattern<
   L extends string,
   V extends string,
-> extends React.Component<{ runner: Runner<L, V> }> {
+> extends React.Component<{
+  runner: Runner<L, V>;
+  frame_rate: number;
+  skip_frames: number;
+}> {
   // INFO: Make this generic and have it accept a runner prop.
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
   active: boolean;
   debounceTimeout: NodeJS.Timeout | undefined;
 
-  constructor(props: { runner: Runner<L, V> }) {
+  constructor(props: {
+    runner: Runner<L, V>;
+    frame_rate: number;
+    skip_frames: number;
+  }) {
     super(props);
     // Initializers
     this.p5ref = React.createRef();
@@ -56,14 +64,14 @@ class TuringPattern<
       this.p5!.frameRate(0);
       this.active = false;
     } else if (!this.active && inView) {
-      this.p5!.frameRate(FRAME_RATE);
+      this.p5!.frameRate(this.props.frame_rate);
       this.active = true;
     }
   }
 
   calcFrame() {
     const { runner } = this.props;
-    for (let i = 0; i < SKIP_FRAMES; i++) {
+    for (let i = 0; i < this.props.frame_rate; i++) {
       runner.step();
     }
   }
@@ -160,8 +168,88 @@ export const Figure1 = () => {
   const runner2 = new Fig1(vars2);
   return (
     <div className="fig fig1">
-      <TuringPattern runner={runner1} />
-      <TuringPattern runner={runner2} />
+      <TuringPattern
+        runner={runner1}
+        frame_rate={FRAME_RATE}
+        skip_frames={SKIP_FRAMES}
+      />
+      <TuringPattern
+        runner={runner2}
+        frame_rate={FRAME_RATE}
+        skip_frames={SKIP_FRAMES}
+      />
+    </div>
+  );
+};
+
+export const Figure2 = () => {
+  const giraffe = new Fig2(
+    {
+      Da: 0.015,
+      Ra: 0.025,
+      Ka: 0.1,
+      Ds: 0.03,
+      Rs: 0.0025,
+      Ms: 0.00075,
+      Ss: 0.00225,
+      Ks: 20,
+      Ry: 0.03,
+      My: 0.003,
+      Sy: 0.00015,
+      Ky: 22,
+    },
+    { a: 0, aa: 5, s: 3, y: 0 },
+    80,
+  );
+  const leopard = new Fig2(
+    {
+      Da: 0.01,
+      Ra: 0.05,
+      Ka: 0.5,
+      Ds: 0.1,
+      Rs: 0.0035,
+      Ms: 0.003,
+      Ss: 0.0075,
+      Ks: 0.3,
+      Ry: 0.03,
+      My: 0.003,
+      Sy: 0.00007,
+      Ky: 22,
+    },
+    { a: 0, aa: 2, s: 2.5, y: 0 },
+    80,
+  );
+  const cheetah = new Fig2(
+    {
+      Da: 0.015,
+      Ra: 0.025,
+      Ka: 0.5,
+      Ds: 0.1,
+      Rs: 0.0025,
+      Ms: 0.00075,
+      Ss: 0.00225,
+      Ks: 1,
+      Ry: 0.03,
+      My: 0.003,
+      Sy: 0.00015,
+      Ky: 22,
+    },
+    { a: 0, aa: 2, s: 2.5, y: 0 },
+    80,
+  );
+  return (
+    <div className="fig fig2">
+      <TuringPattern runner={giraffe} frame_rate={30} skip_frames={10} />
+      <TuringPattern
+        runner={leopard}
+        frame_rate={FRAME_RATE}
+        skip_frames={20}
+      />
+      <TuringPattern
+        runner={cheetah}
+        frame_rate={FRAME_RATE}
+        skip_frames={20}
+      />
     </div>
   );
 };
