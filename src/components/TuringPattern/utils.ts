@@ -86,19 +86,17 @@ export function makeImage(
   p: p5,
   grid: number[][],
   size: number,
-  invert: boolean = false,
+  invert: boolean = true,
 ): p5.Image {
   // Create an image object
   let img = p.createImage(size, size);
   img.loadPixels();
 
   // get min max values
-  // const { min, max } = findMinMax(grid)!;
+  const { min, max } = findMinMax(grid)!;
   // mins.push(min);
   // maxs.push(max);
   // console.log(Math.min(...mins), Math.max(...maxs));
-  const min = 0.6;
-  const max = 1.1;
 
   // Set pixel values based on the 2D array
   for (let i = 0; i < size; i++) {

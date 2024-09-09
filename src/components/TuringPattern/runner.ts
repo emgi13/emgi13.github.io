@@ -22,25 +22,28 @@ const rngWithMinMax = (seed: number, min: number, max: number) => {
   return () => min + (max - min) * rng();
 };
 
+export type fig1_vars_type = {
+  Da: number;
+  Ra: number;
+  Ma: number;
+  Ka: number;
+  Sa: number;
+  Dh: number;
+  Rh: number;
+  Mh: number;
+};
+
 export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
   size: number;
   seed: number;
   grids: { a: number[][]; h: number[][] };
-  vars: {
-    Da: number;
-    Ra: number;
-    Ma: number;
-    Ka: number;
-    Sa: number;
-    Dh: number;
-    Rh: number;
-    Mh: number;
-  };
+  vars: fig1_vars_type;
   steady: { a: number; h: number };
   fluc: number;
   dx: number;
   dt: number;
   constructor(
+    vars: fig1_vars_type,
     size: number = 50,
     seed: number = 1,
     fluc: number = 3,
@@ -49,16 +52,7 @@ export class Fig1 implements Runner<Fig1_layers, Fig1_vars> {
   ) {
     this.size = size;
     this.seed = seed;
-    this.vars = {
-      Da: 0.005,
-      Ra: 0.01,
-      Ma: 0.01,
-      Sa: 0,
-      Ka: 0.25,
-      Dh: 0.2,
-      Rh: 0.02,
-      Mh: 0.02,
-    };
+    this.vars = vars;
     this.fluc = fluc;
     this.dx = dx;
     this.dt = dt;

@@ -1,7 +1,7 @@
 import p5 from "p5";
 import React from "react";
 import "./TuringPattern.scss";
-import { Fig1, type Runner } from "./runner";
+import { Fig1, type fig1_vars_type, type Runner } from "./runner";
 import { makeImage } from "./utils";
 
 const FRAME_RATE = 15;
@@ -142,7 +142,26 @@ class TuringPattern<
   }
 }
 
+const vars1: fig1_vars_type = {
+  Da: 0.005,
+  Ra: 0.01,
+  Ma: 0.01,
+  Sa: 0,
+  Ka: 0.0,
+  Dh: 0.2,
+  Rh: 0.02,
+  Mh: 0.02,
+};
+
+const vars2: fig1_vars_type = { ...vars1, Ka: 0.25 };
+
 export const Figure1 = () => {
-  const runner = new Fig1();
-  return <TuringPattern runner={runner} />;
+  const runner1 = new Fig1(vars1);
+  const runner2 = new Fig1(vars2);
+  return (
+    <div className="fig fig1">
+      <TuringPattern runner={runner1} />
+      <TuringPattern runner={runner2} />
+    </div>
+  );
 };
