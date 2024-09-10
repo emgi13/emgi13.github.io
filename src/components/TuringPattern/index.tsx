@@ -30,7 +30,7 @@ class TuringPattern extends React.Component<TuringPatternProps> {
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
   active: boolean;
-  debounceTimeout: number | undefined;
+  debounceTimeout: undefined | NodeJS.Timeout;
   runner: Runner<any, any>;
   constructor(props: TuringPatternProps) {
     super(props);
