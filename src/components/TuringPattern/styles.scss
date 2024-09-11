@@ -1,18 +1,3 @@
 .TuringPatterns {
   width: 100%;
 }
-
-.TuringCont {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-
-  #all-turing {
-    width: min(80%, 500px);
-    .TuringPattern {
-      margin-bottom: 50vh;
-    }
-  }
-}

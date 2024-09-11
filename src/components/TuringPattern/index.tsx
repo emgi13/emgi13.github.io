@@ -26,11 +26,12 @@ class TuringPattern extends React.Component<TuringPatternProps> {
     frameScale: 0.9,
     makeRunner: defaultRunner,
     invert: false,
+    perRow: 1,
   };
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
   active: boolean;
-  debounceTimeout: undefined | NodeJS.Timeout;
+  debounceTimeout: NodeJS.Timeout | undefined;
   runner: Runner<any, any>;
   constructor(props: TuringPatternProps) {
     super(props);
@@ -46,6 +47,9 @@ class TuringPattern extends React.Component<TuringPatternProps> {
 
   handleTouch() {
     this.runner = this.props.makeRunner();
+    this.active = true;
+    this.p5?.frameRate(this.props.frameRate);
+    this.p5?.loop();
   }
 
   handleScrollDebounced() {
@@ -100,12 +104,15 @@ class TuringPattern extends React.Component<TuringPatternProps> {
   renderFrame() {
     // console.log("render");
     const { runner } = this;
-    const { width: w, height: h } = runner.size;
+    const { perRow } = this.props;
     const p = this.p5!;
-    const width = p.width;
-    const height = (width * h) / w;
+    const width = p.width / perRow;
+    const height = width / runner.aspectRatio;
     let i = 0;
+    const texts: { str: string; x: number; y: number }[] = [];
     for (const layer in runner.grids) {
+      const y = Math.floor(i / perRow);
+      const x = i % perRow;
       // get the image
       const img = makeImage(
         p,
@@ -113,30 +120,53 @@ class TuringPattern extends React.Component<TuringPatternProps> {
         runner.size,
         runner.range[layer],
       );
+      const w_gap = ((1 - this.props.frameScale) / 2) * width;
+      const h_gap = ((1 - this.props.frameScale) / 2) * height;
       // put the image on the canvas
       p.image(
         img,
-        ((1 - this.props.frameScale) / 2) * width,
-        i * height + ((1 - this.props.frameScale) / 2) * height,
+        x * width + w_gap,
+        y * height + h_gap,
         width * this.props.frameScale,
         height * this.props.frameScale,
       );
+      texts.push({
+        str: layer,
+        x: (x + 1) * width - w_gap,
+        y: y * height + h_gap,
+      });
       i += 1;
     }
     p.filter(p.BLUR, this.props.blurRadius);
     if (this.props.invert) p.filter(p.INVERT);
+    const text_padding = 2;
+    for (const text of texts) {
+      const text_width = p.textWidth(text.str) + 2 * text_padding;
+      const text_height = p.textSize() + 2 * text_padding;
+      p.fill(0, 0, 0, 150);
+      p.rect(text.x - text_width, text.y, text_width, text_height);
+      p.fill("white");
+      p.text(text.str, text.x - text_padding, text.y + text_padding);
+    }
     if (!runner.active) p.noLoop();
   }
 
   sketch = (p: p5) => {
     p.setup = () => {
       const { size } = this.runner;
+      const { perRow } = this.props;
       const layers = Object.keys(this.runner.grids).length;
       const width = this.p5ref.current?.offsetWidth || 400;
-      const height = ((width * size.height) / size.width) * layers;
+      const ww = width / perRow;
+      const height =
+        ((ww * size.height) / size.width) * Math.ceil(layers / perRow);
       p.createCanvas(width, height);
       p.background(0, 0, 0, 0);
       p.frameRate(0);
+      p.fill("white");
+      p.textAlign(p.RIGHT, p.TOP);
+      p.textSize(20);
+      p.stroke(0, 0, 0, 0);
       window.addEventListener("scroll", this.handleScrollDebounced, {
         passive: true,
       });
