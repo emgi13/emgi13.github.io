@@ -11,6 +11,7 @@ import {
   SkipNext,
   Stop,
 } from "@mui/icons-material";
+import { ASCII } from "./toAscii";
 
 const valid_tokens = [">", "<", "+", "-", ".", ",", "[", "]"];
 
@@ -201,7 +202,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     }
     return (
       <div
-        title={`${value} (${String.fromCodePoint(value)})`}
+        title={`${value} (${ASCII[value]})`}
         key={index}
         className={"memdata " + (index === memPointer ? "current" : "")}
       >
@@ -273,9 +274,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     const { outputs } = this.state;
     const str = outputs
       .filter((v) => v.type === "output")
-      // @ts-ignore its ok
-      .map((v) => String.fromCodePoint(v.value))
-      .join("");
+      .map((v) => <span title={`${v.value}`}>{ASCII[v.value as number]}</span>);
 
     const others = outputs
       .filter((v) => v.type !== "output")
@@ -283,7 +282,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
 
     return (
       <>
-        <div className="ascii">{str}</div>
+        <pre className="ascii">{str}</pre>
         <div className={"others " + (others.length > 0 ? "border" : "")}>
           {others}
         </div>
@@ -464,9 +463,9 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
   }
 
   componentDidUpdate() // prevProps: Readonly<BrainfuckProps>,
-    // prevState: Readonly<BrainfuckState>,
-    // snapshot?: any,
-    : void {
+  // prevState: Readonly<BrainfuckState>,
+  // snapshot?: any,
+  : void {
     const component = this.componentRef.current!;
     scrollToElement(
       component.querySelector(".memory")!,

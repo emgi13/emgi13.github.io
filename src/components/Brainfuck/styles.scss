@@ -133,6 +133,9 @@
 
           .ascii {
             flex: 0;
+            > span {
+              padding: 0;
+            }
           }
 
           .others {
