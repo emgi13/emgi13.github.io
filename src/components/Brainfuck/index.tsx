@@ -201,7 +201,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     }
     return (
       <div
-        title={`${value} (${String.fromCharCode(value)})`}
+        title={`${value} (${String.fromCodePoint(value)})`}
         key={index}
         className={"memdata " + (index === memPointer ? "current" : "")}
       >
@@ -274,7 +274,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     const str = outputs
       .filter((v) => v.type === "output")
       // @ts-ignore its ok
-      .map((v) => String.fromCharCode(v.value))
+      .map((v) => String.fromCodePoint(v.value))
       .join("");
 
     const others = outputs
