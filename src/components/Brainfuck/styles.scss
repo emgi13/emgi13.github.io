@@ -5,6 +5,7 @@
     padding: 4px;
     margin: 0;
     text-underline-offset: 0.15em;
+    scrollbar-width: none;
   }
   button {
     border: none;
@@ -134,6 +135,8 @@
           .ascii {
             flex: 0;
             > span {
+              display: inline-block;
+              min-width: 0.6em;
               padding: 0;
             }
           }
