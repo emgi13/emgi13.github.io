@@ -163,7 +163,11 @@
         }
       }
       .memory {
-        line-height: 1em;
+        overflow-x: hidden;
+        .memscroll {
+          overflow-x: hidden;
+          gap: 0;
+        }
         hr {
           border: none;
           margin: 0;
@@ -171,8 +175,16 @@
           height: 1px;
           background: #ffffff77;
         }
+        .memdata {
+          overflow-x: hidden;
+          overflow-y: none;
+          width: max-content;
+          padding: 0;
+          color: #ffffff99;
+        }
         .memdata.current {
           text-decoration: underline;
+          color: #ffffff;
         }
         flex: 3;
         height: 100%;

@@ -622,7 +622,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     const component = this.componentRef.current!;
     const title = this.titleRef.current!;
     const component_height = title.clientWidth!;
-    component.style.fontSize = `${component_height / 25}px`;
+    component.style.fontSize = `${component_height / 22}px`;
   }
 }
 
