@@ -178,9 +178,11 @@
         .memdata {
           padding: 0;
           color: #ffffff99;
+          span {
+            padding: 0;
+          }
         }
         .memdata.current {
-          text-decoration: underline;
           color: #ffffff;
         }
         flex: 3;

@@ -323,12 +323,16 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
 
   toBinary(value: number, index: number) {
     const { memPointer } = this.state;
-    let s: string = "";
+    let s1: string = "";
+    let s2: string = "";
     let v = value;
-    for (let i = 0; i < 8; i++) {
-      s = `${v % 2}` + s;
+    for (let i = 0; i < 4; i++) {
+      s1 = `${v % 2}` + s1;
       v = Math.floor(v / 2);
-      if (i === 3) s = " " + s;
+    }
+    for (let i = 0; i < 4; i++) {
+      s2 = `${v % 2}` + s2;
+      v = Math.floor(v / 2);
     }
     return (
       <div
@@ -336,7 +340,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
         key={index}
         className={"memdata " + (index === memPointer ? "current" : "")}
       >
-        {s}
+        <span>{s2}&#8201;&zwj;</span>&zwj;<span>{s1}</span>
       </div>
     );
   }
