@@ -203,7 +203,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     switch (token) {
       case ">":
         memPointer += 1;
-        if (memPointer >= memMax) memMax = memPointer;
+        if (memPointer >= memMax - 4) memMax += 4;
         progPointer += 1;
         this.setState({ memPointer, progPointer, memMax });
         break;
@@ -593,9 +593,9 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
   }
 
   componentDidUpdate() // prevProps: Readonly<BrainfuckProps>,
-  // prevState: Readonly<BrainfuckState>,
-  // snapshot?: any,
-  : void {
+    // prevState: Readonly<BrainfuckState>,
+    // snapshot?: any,
+    : void {
     const component = this.componentRef.current!;
     scrollToElement(
       component.querySelector(".memory")!,
