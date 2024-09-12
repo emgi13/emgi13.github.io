@@ -1,0 +1,176 @@
+.Brainfuck {
+  color: white;
+  * {
+    box-sizing: border-box;
+    padding: 4px;
+    margin: 0;
+    text-underline-offset: 0.15em;
+  }
+  button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+    color: white;
+    width: 100%;
+    aspect-ratio: 1;
+    cursor: pointer;
+  }
+  svg {
+    font-size: 2.5em;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 0;
+    gap: 4px;
+
+    &.row {
+      flex-direction: row;
+    }
+
+    &.column {
+      flex-direction: column;
+    }
+
+    &.center {
+      align-items: center;
+    }
+  }
+
+  .container {
+    font-family: "JetbrainsMono", monospace;
+
+    .border {
+      border: 2px solid;
+    }
+
+    .main,
+    .io {
+      width: 100%;
+    }
+
+    .io {
+      display: flex;
+      flex-direction: row;
+      justify-content: stretch;
+      align-items: center;
+      padding: 0;
+      textarea {
+        flex: 1;
+        background: none;
+        margin: none;
+        padding: 2px;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        height: 100%;
+      }
+      input {
+        flex: 1;
+        background: none;
+        margin: none;
+        border: none;
+        padding: 2px;
+        color: white;
+        font-size: 1.2em;
+        height: 100%;
+      }
+    }
+    svg {
+      font-size: 3em;
+    }
+
+    .main {
+      aspect-ratio: 1;
+      overflow: hidden;
+
+      .buttons {
+        flex: 1;
+        justify-content: space-between;
+        > * {
+          gap: 0;
+        }
+      }
+      .prog {
+        flex: 12;
+
+        .title {
+          flex: 1;
+          font-weight: bold;
+          font-size: 1.4em;
+        }
+
+        .program {
+          flex: 8;
+          overflow: scroll;
+          .progscroll {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow: scroll;
+            line-height: 0.7em;
+            span.current {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .ascii-cont {
+          flex: 7;
+          height: 100%;
+          overflow: scroll;
+          line-height: 1.1em;
+
+          display: flex;
+          flex-direction: column;
+          justify-items: stretch;
+          align-items: stretch;
+
+          .ascii {
+            flex: 0;
+          }
+
+          .others {
+            flex: 1;
+            height: 100%;
+            overflow: scroll;
+          }
+
+          .error {
+            color: #cc3311;
+          }
+        }
+
+        .output {
+          flex: 7;
+          height: 100%;
+          overflow: scroll;
+          line-height: 1;
+          .error {
+            color: #cc3311;
+          }
+        }
+      }
+      .memory {
+        line-height: 1em;
+        hr {
+          border: none;
+          margin: 0;
+          padding: 0;
+          height: 1px;
+          background: #ffffff77;
+        }
+        .memdata.current {
+          text-decoration: underline;
+        }
+        flex: 3;
+        height: 100%;
+        overflow-y: scroll;
+      }
+    }
+  }
+}
