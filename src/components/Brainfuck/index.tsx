@@ -16,7 +16,8 @@ const valid_tokens = [">", "<", "+", "-", ".", ",", "[", "]"];
 
 const MAX_VALUE = Math.pow(2, 7);
 
-const default_prog = ",.";
+const default_prog =
+  "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
 
 class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
   componentRef: React.RefObject<HTMLDivElement>;
