@@ -7,7 +7,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://emgi13.github.io",
+  site: "http://emgi.co.in",
   integrations: [
     mdx({
       rehypePlugins: [
