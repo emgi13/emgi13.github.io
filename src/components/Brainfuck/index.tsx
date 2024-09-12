@@ -25,7 +25,7 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     program: default_prog,
     maxMem: 4096,
   };
-  player: number | null;
+  player: NodeJS.Timer | null;
   constructor(props: BrainfuckProps) {
     super(props);
 
@@ -272,8 +272,10 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
     const { outputs } = this.state;
     const str = outputs
       .filter((v) => v.type === "output")
+      // @ts-ignore its ok
       .map((v) => String.fromCharCode(v.value))
       .join("");
+
     const others = outputs
       .filter((v) => v.type !== "output")
       .map(this.toOutput);
