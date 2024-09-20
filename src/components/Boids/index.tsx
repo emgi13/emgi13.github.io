@@ -8,7 +8,7 @@ class Boids extends React.Component<BoidsProps> {
   p5ref: React.RefObject<HTMLDivElement>;
   p5: p5 | undefined;
   active: boolean;
-  debounceTimeout: number | undefined;
+  debounceTimeout: NodeJS.Timeout | undefined;
   runner: Runner2D;
   frameRate: number;
   skipFrames: number;
