@@ -31,7 +31,6 @@ export const TuringStripes = () => (
         size: { width: 40, height: 50 },
       })
     }
-    blurRadius={2}
     frameRate={30}
     skipFrames={25}
     perRow={2}
@@ -48,7 +47,6 @@ export const TuringGiraffe = () => (
       })
     }
     invert
-    blurRadius={2}
     frameRate={30}
     skipFrames={10}
     perRow={3}
@@ -68,7 +66,6 @@ export const TuringLeopard = () => (
       })
     }
     invert
-    blurRadius={3}
     frameRate={30}
     skipFrames={10}
     perRow={3}
@@ -88,7 +85,6 @@ export const TuringCheetah = () => (
       })
     }
     invert
-    blurRadius={2}
     frameRate={30}
     skipFrames={15}
     perRow={3}
@@ -99,7 +95,6 @@ export const TuringDragonfly = () => (
   <TuringPattern
     makeRunner={() => new DragonflyRunner({ size: { width: 50, height: 30 } })}
     invert
-    blurRadius={2}
     frameRate={30}
     skipFrames={50}
     perRow={2}
