@@ -1,0 +1,21 @@
+---
+interface Props {
+  src: string;
+  muted?: boolean;
+  loop?: boolean;
+  pip?: boolean;
+}
+
+const { src, muted = true, loop = false } = Astro.props;
+---
+
+<video
+  width="720"
+  controls
+  loop={loop}
+  muted={muted}
+  controlslist="nodownload disablepictureinpicture"
+  preload="metadata"
+>
+  <source src={src} type="video/mp4" />
+</video>
