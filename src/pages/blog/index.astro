@@ -27,21 +27,20 @@ const posts = (await getCollection("blog")).sort(
 							<li>
 								<a href={`/blog/${post.slug}/`}>
 									<div class="effect">
-										{" "}
 										<img
-											width={720}
-											height={360}
 											src={post.data.heroImage}
+											width="720px"
+											height="360px"
 											alt=""
 										/>
 									</div>
+									<h4 class="title">{post.data.title}</h4>
 									<div class="title-row">
-										<h4 class="title">{post.data.title}</h4>
+										<h6 class="subtitle">{post.data.subtitle}</h6>
 										<p class="date">
 											<FormattedDate date={post.data.pubDate} />
 										</p>
 									</div>
-									<h6 class="subtitle">{post.data.subtitle}</h6>
 								</a>
 							</li>
 						))

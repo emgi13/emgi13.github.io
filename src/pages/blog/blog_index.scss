@@ -28,13 +28,15 @@
       }
       .effect {
         position: relative;
+        width: 100%;
         display: inline-block;
       }
 
       .effect img {
         display: block;
         width: 100%;
-        height: auto;
+        aspect-ratio: 2;
+        object-fit: cover;
       }
 
       .effect::before {
