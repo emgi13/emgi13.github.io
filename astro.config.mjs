@@ -2,18 +2,16 @@ import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
-// import rehypeSlug from "rehype-slug";
-// import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 
 // https://astro.build/config
 export default defineConfig({
   site: "http://emgi.co.in",
   integrations: [
     mdx({
-      // rehypePlugins: [
-      //   rehypeSlug,
-      //   [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      // ],
+      rehypePlugins: [rehypeKatex],
+      remarkPlugins: [remarkMath],
     }),
     sitemap(),
     react(),
