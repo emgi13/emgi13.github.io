@@ -1,13 +1,59 @@
 ---
-title: "Boids"
-subtitle: "Modeling flocking"
-abstract: ""
-pubDate: "Jul 02 2022"
-heroImage: "/game_of_life.jpg"
+title: "Boid Flocking"
+subtitle: "Modeling Biophysical Systems"
+abstract: "This blog explores the fascinating world of Boid flocking simulations, a model that helps us understand how groups of animals move together. We will discuss the basic principles behind this model and its applications in various fields."
+pubDate: "May 17, 2023"
+heroImage: "/boids.jpg"
 ---
 
-## Simulator
+## Introduction to Boid Flocking
+
+Have you ever watched a flock of birds flying in perfect formation? Or seen a school of fish moving as one? This behavior is not random; it can be explained through a model called Boid flocking.
+
+Boid flocking is a computer simulation that mimics how groups of animals move together. It was created by computer scientist Craig Reynolds in 1986. The term "Boid" comes from "bird-oid," which means bird-like.
+
+## The Basic Principles of Boid Flocking
+
+The Boid model is based on three simple rules that each individual (or "boid") follows:
+
+1. **Separation**: Boids try to avoid getting too close to their neighbors. This prevents collisions and keeps the group from becoming too crowded.
+2. **Alignment**: Boids adjust their direction to match the average direction of their neighbors. This helps them move together as a cohesive group.
+3. **Cohesion**: Boids move towards the average position of their neighbors. This keeps the group united.
+
+These three rules lead to complex and realistic group behavior, even though each boid follows only simple instructions.
+
+## Simulation
 
 import Boid from "../../components/Boids/Boid.astro";
 
 <Boid />
+
+The above is an implementation of the Boid flocking algorithm. You can click on the simulation to restart it.
+
+Each boid has a perception radius that is about 5% of the width of the world. This means they can only "see" and react to other boids within this range.
+
+The speed of each boid is constant, mimicking how birds fly. Therefore, the boids do not speed up or slow down during the simulation; they only change direction.
+
+The simulation has three adjustable parameters that can change how the boids behave:
+
+- **$A$**: The Alignment strength. Boids try to align their direction with all other boids they can perceive.
+- **$S$**: The Separation strength. Boids try to keep a safe distance from other boids they can perceive.
+- **$C$**: The Cohesion strength. Boids try to move towards the average position of all boids they can perceive.
+
+The fourth parameter, **$N$**, changes the total number of boids in the simulation. Adjusting this parameter will restart the simulation.
+
+To prevent the boids from leaving the visible area of the simulation, an exponential force is applied to each boid when it gets close to the boundary.
+
+## Applications of Boid Flocking
+
+Boid flocking simulations have many applications in various fields:
+
+- **Robotics**: Engineers use flocking algorithms to design robots that can work together efficiently.
+- **Computer Graphics**: Animators use these simulations to create realistic movements in films and video games.
+- **Biology**: Scientists study animal behavior and movement patterns using flocking models.
+
+## Conclusion
+
+Boid flocking is a powerful tool for understanding how groups of animals behave. By following simple rules, individual boids can create complex and coordinated movements. This model not only helps us understand nature but also has practical applications in technology and science.
+
+Have you ever thought about how these simple rules can lead to such complex behavior? The next time you see a flock of birds, remember that there is a fascinating science behind their movement!
