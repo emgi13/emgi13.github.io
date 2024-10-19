@@ -35,12 +35,10 @@ const posts = (await getCollection("blog")).sort(
 										/>
 									</div>
 									<h4 class="title">{post.data.title}</h4>
-									<div class="title-row">
-										<h6 class="subtitle">{post.data.subtitle}</h6>
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
-										</p>
-									</div>
+									<h6 class="subtitle">{post.data.subtitle}</h6>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
 								</a>
 							</li>
 						))
