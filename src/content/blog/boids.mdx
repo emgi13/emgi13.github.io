@@ -30,19 +30,28 @@ import Boid from "../../components/Boids/Boid.astro";
 
 The above is an implementation of the Boid flocking algorithm. You can click on the simulation to restart it.
 
-Each boid has a perception radius that is about 5% of the width of the world. This means they can only "see" and react to other boids within this range.
+### Perception and Movement
 
+Each boid has a perception radius that is about 5% of the width of the world. This means they can only "see" and react to other boids within this range.
 The speed of each boid is constant, mimicking how birds fly. Therefore, the boids do not speed up or slow down during the simulation; they only change direction.
+
+### Parameters
 
 The simulation has three adjustable parameters that can change how the boids behave:
 
 - **$A$**: The Alignment strength. Boids try to align their direction with all other boids they can perceive.
 - **$S$**: The Separation strength. Boids try to keep a safe distance from other boids they can perceive.
 - **$C$**: The Cohesion strength. Boids try to move towards the average position of all boids they can perceive.
+  The fourth parameter, **$N$**, changes the total number of boids in the simulation. Adjusting this parameter will restart the simulation.
 
-The fourth parameter, **$N$**, changes the total number of boids in the simulation. Adjusting this parameter will restart the simulation.
+### Boundary Behavior
 
 To prevent the boids from leaving the visible area of the simulation, an exponential force is applied to each boid when it gets close to the boundary.
+
+### Alignment Graph
+
+In the top right corner of the simulation window, there is a graph that shows the overall alignment of all the boids. Initially, the alignment is close to 0, indicating a random initialization of the simulation. Over time, the alignment increases, reaching 1 when all the boids become part of one cohesive flock.
+You may notice periodic dips in the alignment. These dips occur when the boids encounter the boundary. The boundary forces cause the flock to change direction, leading to temporary decreases in alignment. Once the entire flock has interacted with the boundary, the alignment returns to its average level.
 
 ## Applications of Boid Flocking
 
