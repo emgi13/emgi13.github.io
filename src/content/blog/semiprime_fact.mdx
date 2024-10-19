@@ -1,6 +1,6 @@
 ---
 title: "Semiprime Factorization Using AQC"
-subtitle: "Improving B-SAT Techniques with AQC"
+subtitle: "Enhancing B-SAT Techniques with AQC"
 abstract: ""
 pubDate: "May 17, 2023"
 heroImage: "/AQC.jpg"
@@ -8,15 +8,15 @@ heroImage: "/AQC.jpg"
 
 ## Introduction
 
-This project, titled _"Semiprime Factorization Using AQC"_, aims to compare different published methods of semiprime factorization using Adiabatic Quantum Computation (AQC) and verify the scaling law proposed in these research studies. The focus is on exploring various AQC techniques to find a more efficient way to factor semiprime numbers, which are challenging for classical computers to handle. The project report can be found [here](/semiprime_orig.pdf).
+This project, titled _"Semiprime Factorization Using AQC"_, aims to compare different published methods of semiprime factorization using Adiabatic Quantum Computation (AQC). We will verify the scaling law proposed in these studies. The focus is on exploring various AQC techniques to find a more efficient way to factor semiprime numbers, which are difficult for classical computers to handle. You can find the project report [here](/semiprime_orig.pdf).
 
 ## What is AQC?
 
-**Adiabatic Quantum Computation (AQC)** is a type of quantum computing that uses the principles of quantum mechanics to find the lowest energy state of a problem, represented by a cost Hamiltonian. This method is similar to classical algorithms like _Simulated Annealing (SA)_, which also tries to find the best solution by exploring different possibilities. However, AQC can often do this faster and more accurately because it can take advantage of quantum effects, such as quantum tunneling, to escape local minima—places where a solution seems optimal but is not the best overall.
+**Adiabatic Quantum Computation (AQC)** is a type of quantum computing that uses quantum mechanics to find the lowest energy state of a problem, represented by a cost Hamiltonian. This method is similar to classical algorithms like _Simulated Annealing (SA)_, which also seeks the best solution by exploring different possibilities. However, AQC can often do this faster and more accurately because it can use quantum effects, such as quantum tunneling, to escape local minima—places where a solution seems optimal but is not the best overall.
 
 ## Understanding Semiprime Numbers
 
-A semiprime number is a special type of composite number that is made by multiplying exactly two distinct prime numbers. For example, the number 15 is a semiprime because it is the product of the primes 3 and 5. Semiprimes are very important in the field of cryptography, especially in systems like RSA encryption. The security of RSA relies on the fact that while it is easy to multiply two large primes together to create a semiprime, it is very hard to do the reverse—factor the semiprime back into its prime components. This difficulty is what keeps our digital communications secure.
+A semiprime number is a special type of composite number made by multiplying exactly two distinct prime numbers. For example, the number 15 is a semiprime because it is the product of the primes 3 and 5. Semiprimes are very important in cryptography, especially in systems like RSA encryption. The security of RSA relies on the fact that while it is easy to multiply two large primes to create a semiprime, it is very hard to do the reverse—factor the semiprime back into its prime components. This difficulty is what keeps our digital communications secure.
 
 ## Methodology
 
@@ -24,7 +24,7 @@ The research follows a series of important steps:
 
 ### 1. Classical Preprocessing
 
-In this first step, we generate initial guesses for the bitlengths of the two factors, which we will call $b_P$ and $b_Q$. We then create logical statements, known as clauses, based on these guesses. To make the problem easier to solve, we use boolean logic to reduce the number of variables involved, condensing the problem into a smaller number of variables. This reduction allows us to attempt AQC on current hardware.
+In this first step, we generate initial guesses for the bit lengths of the two factors, which we will call $b_P$ and $b_Q$. We then create logical statements, known as clauses, based on these guesses. To make the problem easier to solve, we use boolean logic to reduce the number of variables involved. This reduction allows us to attempt AQC on current hardware.
 
 ### 2. Constructing the Cost Function
 
@@ -36,7 +36,7 @@ To simplify the problem further, we apply a set of logical rules that help us re
 
 ### 4. Implementing AQC
 
-Once we have a simplified version of the problem, we use AQC to find the ground state of the reduced Hamiltonians. This process involves making repeated measurements to identify the two prime factors $P$ and $Q$ of the semiprime number. The goal is to achieve sub-$b_N$ scaling, which means making the size of the problem smaller than the bitlength of the composite number $N$.
+Once we have a simplified version of the problem, we use AQC to find the ground state of the reduced Hamiltonians. This process involves making repeated measurements to identify the two prime factors $P$ and $Q$ of the semiprime number. The goal is to achieve sub-$b_N$ scaling, which means making the size of the problem smaller than the bit length of the composite number $N$.
 
 ### 5. Annealing Schedule
 
