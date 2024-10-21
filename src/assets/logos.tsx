@@ -1,5 +1,3 @@
-import React from "react";
-
 export const LOGO_SMALL = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
