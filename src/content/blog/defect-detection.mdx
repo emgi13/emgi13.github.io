@@ -1,23 +1,24 @@
 ---
 title: "Atomic Defect Detection"
 subtitle: "Video analysis of a heat-treatment simulation"
-abstract: "In this project, I will attempt to identify regions of defects in lattice structures. By using techniques like Delaunay triangulation and Voronoi tessellation, estimate coordination number and coordination sphere to pinpoint the areas of defects."
+abstract: "In this project, I will attempt to identify regions of defects in lattice structures. By using techniques like Delaunay triangulation and Voronoi tessellation, I will estimate the coordination number and coordination sphere to pinpoint the areas of defects."
 pubDate: "Jul 02 2022"
 heroImage: "/game_of_life.jpg"
 ---
 
+import Video from "../../components/Video.astro";
+
 ## Introduction
 
-Given the image for a lattice structure, it might be easy to visually detect some of the glaring defects present in the material, but it's not always so easy to pinpoint some of the areas of fault. It becomes even more difficult to be able to this algorithmically.
+Given the image of a lattice structure, it might be easy to visually detect some of the glaring defects present in the material, but it's not always so easy to pinpoint some of the areas of fault. It becomes even more difficult to do this algorithmically.
 
-The problem becomes easier for humans to detect these defects if a video of the heat-treatment process is provided, as we are able to better pinpoint areas that change significantly through time.
+The problem becomes easier for humans to detect these defects if a video of the heat-treatment process is provided, as we are able to better pinpoint areas that change significantly over time.
 
 In this blog post, I'd like to showcase one of the methods I used to attempt this problem.
 
 ## Source Material
 
-For the problem, a excelent video by Steve Mould[^steve-channel] came across my YouTube feed.
-
+For the problem, an excellent video by Steve Mould[^steve-channel] came across my YouTube feed.
 import Video from "../../components/Video.astro";
 
 <iframe
@@ -29,9 +30,9 @@ import Video from "../../components/Video.astro";
   allowfullscreen
 ></iframe>
 
-In this video, Steve Mould shows what happens when a material is heat-treated and how the amount of defect present in a material can be reduced through this process.
+In this video, Steve Mould shows what happens when a material is heat-treated and how the amount of defects present in a material can be reduced through this process.
 
-He used a bunch of ball-bearings that were contained between two sheets of glass to represent a 2D cross-section of the material. The gap between the glass sheets was just slightly bigger than the diameter of the ball bearings to allow movement of the bearings while keeping it tight enough so that the ball bearings do not move significantly perpendicular to the 2D plane.
+He used a bunch of ball bearings that were contained between two sheets of glass to represent a 2D cross-section of the material. The gap between the glass sheets was just slightly bigger than the diameter of the ball bearings to allow movement of the bearings while keeping it tight enough so that the ball bearings do not move significantly perpendicular to the 2D plane.
 
 To simulate the heat-treatment process, a small vibrating motor was attached to one of the corners of the setup. This added energy to the system, which simulated the thermal energy each atom possessed. The motor could control the amount of vibration, which in turn helped him control the temperature of the model.
 
@@ -39,9 +40,9 @@ I've used a small snippet from the video for my analysis.
 
 <Video src="/assets/defect-detection/src_4.mp4" loop />
 
-Initially, a high temperature (more vibrations) is set, which was gradually decreased, simulating the heat-treatment/annealing process of materials. From his video, it was easy to see that the amount of defects, be it point or line defects, were reduced gradually as the treatment progressed.
+Initially, a high temperature (more vibrations) is set, which is gradually decreased, simulating the heat-treatment/annealing process of materials. From his video, it was easy to see that the amount of defects, be they point or line defects, were reduced gradually as the treatment progressed.
 
-[^steve-channel]: [Steve Mould on Youtube](https://www.youtube.com/@SteveMould)
+[^steve-channel]: [Steve Mould on YouTube](https://www.youtube.com/@SteveMould)
 
 Taking this video, I'd like to do some processing to make it easier to pinpoint the areas of defects in the material.
 
@@ -55,7 +56,7 @@ The first step was to find the locations of all the atoms in the video. In the m
 
 To find the location (of the center) of an atom, I first used a threshold and converted the image into a black and white image. The regions where the atoms were present created dark regions.
 
-However, there are some artifacts on the ball-bearings due to the reflections on their shiny surface, which kept the regions from being circular and instead created highlights on each ball bearing.
+However, there are some artifacts on the ball bearings due to the reflections on their shiny surface, which kept the regions from being circular and instead created highlights on each ball bearing.
 
 ### 1.2 Gaussian Blur
 
@@ -69,15 +70,15 @@ $$
 
 The radius $r$ of the Gaussian filter was set to a value of the magnitude of the diameter of the atoms in pixels. This created unique minima in the shadow region, which we could identify as the "center" of the atom.
 
-Due to the artifacts identified before, there was some offset between this identified center and true center of the atom. As the artifacts on the atoms were similar, the offsets were also the same for all atoms. As correctly identifying the offset was challenging, and the offsets were small, I chose to ignore the offsets.
+Due to the artifacts identified before, there was some offset between this identified center and the true center of the atom. As correctly identifying the offset was challenging, and the offsets were small, I chose to ignore the offsets.
 
 An important thing to note is that this does not work near the edges of the image. If an atom was only partially visible in the image, the minima would still indicate the center of the dark region instead of the entire shadow of the atom. This can be fixed by completing this center-finding process and then ignoring all the centers identified that were less than a diameter away from the border. I have skipped this step in order to keep the entire image file, but it will be important to note the edge effects and focus on the region away from the borders for analysis.
 
 ## 2. Coordination Number
 
-The coordination number represents the number of bonds each atom has. By analyzing the coordination number, we can identify regions where the coordination deviated from the global median, indicating potential defects in the material.
+The coordination number represents the number of bonds each atom has. By analyzing the coordination number, we can identify regions where the coordination deviates from the global median, indicating potential defects in the material.
 
-One stratergy could be use the centers identified earlier and consider all the atoms within a distance of 1.5 times the diameter as neighbors. However, this approach is not practical, as it assumes a perfect crystalline structure and would not work effectively near regions of defects.
+One strategy could be to use the centers identified earlier and consider all the atoms within a distance of 1.5 times the diameter as neighbors. However, this approach is not practical, as it assumes a perfect crystalline structure and would not work effectively near regions of defects.
 
 ### 2.1 Delaunay Triangulation
 
@@ -95,12 +96,12 @@ We can estimate the coordination number to be the number of neighbors of the ato
 
 While the Delaunay triangulation method provides valuable insights, the estimates are not always accurate. For instance,
 
-- in the case of point defects, the interpolation will correctly identify these defects, but there isn't a unique Delaunay triangulation. This lack of uniqueness can cause the coordination number to change rapidly between frames, leading to flickering we can see in the above video.
-- for defects where a line of atoms is slightly displaced, the coordination number will remain the same as in defectless regions, which can result in the entire region being incorectly identified as defectless.
+- In the case of point defects, the interpolation will correctly identify these defects, but there isn't a unique Delaunay triangulation. This lack of uniqueness can cause the coordination number to change rapidly between frames, leading to flickering we can see in the above video.
+- For defects where a line of atoms is slightly displaced, the coordination number will remain the same as in defectless regions, which can result in the entire region being incorrectly identified as defectless.
 
 ## 3. Coordination Sphere
 
-The coordination sphere refers to the region of influence of each atom, and its deviation in volume (or area) can be used to identify regions of defects. At the regions of defects, due to inoptimal packing the area will increase, alerting us about the defect.
+The coordination sphere refers to the region of influence of each atom, and its deviation in volume (or area) can be used to identify regions of defects. At the regions of defects, due to suboptimal packing, the area will increase, alerting us about the defect.
 
 ### 3.1 Voronoi Tessellation
 
