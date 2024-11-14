@@ -17,5 +17,5 @@ const { src, muted = true, loop = false } = Astro.props;
   preload="metadata"
   playsinline
 >
-  <source src={src} type="video/mp4" />
+  <source src={src + "#t=0.001"} type="video/mp4" />
 </video>
