@@ -14,7 +14,11 @@ const { title, subtitle, abstract, pubDate, updatedDate, heroImage } =
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={abstract || ""} />
+		<BaseHead
+			title={title}
+			description={abstract || subtitle || ""}
+			image={heroImage}
+		/>
 		<link
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
