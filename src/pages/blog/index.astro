@@ -4,7 +4,6 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
 import "./blog_index.scss";
 
 const posts = (await getCollection("blog")).sort(
@@ -36,9 +35,6 @@ const posts = (await getCollection("blog")).sort(
 									</div>
 									<h4 class="title">{post.data.title}</h4>
 									<h6 class="subtitle">{post.data.subtitle}</h6>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
 								</a>
 							</li>
 						))
