@@ -189,7 +189,7 @@ class Boids extends React.Component<BoidsProps> {
             <div>A</div>
             <Slider
               defaultValue={this.a}
-              onChange={(e, v) => this.changeA(v as number)}
+              onChange={(_e, v) => this.changeA(v as number)}
               min={0}
               max={10}
               step={0.1}
@@ -200,7 +200,7 @@ class Boids extends React.Component<BoidsProps> {
             <div>S</div>
             <Slider
               defaultValue={this.s}
-              onChange={(e, v) => this.changeS(v as number)}
+              onChange={(_e, v) => this.changeS(v as number)}
               min={0}
               max={10}
               step={0.1}
@@ -211,7 +211,7 @@ class Boids extends React.Component<BoidsProps> {
             <div>C</div>
             <Slider
               defaultValue={this.c}
-              onChange={(e, v) => this.changeC(v as number)}
+              onChange={(_e, v) => this.changeC(v as number)}
               min={0}
               max={10}
               step={0.1}
@@ -222,7 +222,7 @@ class Boids extends React.Component<BoidsProps> {
             <div>N</div>
             <Slider
               defaultValue={40}
-              onChange={(e, v) => this.changeN(v as number)}
+              onChange={(_e, v) => this.changeN(v as number)}
               min={10}
               max={200}
               step={10}

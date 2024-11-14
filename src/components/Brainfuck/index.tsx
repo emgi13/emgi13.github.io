@@ -185,17 +185,8 @@ class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
   }
 
   step() {
-    let {
-      tokens,
-      memory,
-      progPointer,
-      memPointer,
-      memMax,
-      outputs,
-      isDone,
-      isEditing,
-      isInputing,
-    } = this.state;
+    let { tokens, memory, progPointer, memPointer, memMax, outputs, isDone } =
+      this.state;
     if (isDone) return isDone;
     const token = tokens[progPointer];
     let count = 1;

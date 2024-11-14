@@ -13,7 +13,7 @@ import {
 import { Slider } from "@mui/material";
 
 const sizes = [5, 8, 12, 16, 25, 32, 64];
-const sizeMarks = sizes.map((v, i, a) => ({ value: i }));
+const sizeMarks = sizes.map((_v, i, _a) => ({ value: i }));
 const speeds = [0.2, 0.5, 1, 2, 5, 10];
 const base_framerate = 6;
 
@@ -129,9 +129,9 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
   }
 
   componentDidUpdate(
-    prevProps: Readonly<{}>,
+    _prevProps: Readonly<{}>,
     prevState: Readonly<GameState>,
-    snapshot?: any,
+    _snapshot?: any,
   ): void {
     const { state } = this;
     if (state.sizeInd !== prevState.sizeInd) {

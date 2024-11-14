@@ -1,7 +1,5 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { SITE_TITLE } from "../consts";
-import { LOGO_SMALL } from "../assets/logos.tsx";
 import SiteLogo from "./SiteLogo";
 import "./header.scss";
 ---
@@ -10,7 +8,6 @@ import "./header.scss";
 	<nav>
 		<HeaderLink href="/"><SiteLogo /></HeaderLink>
 		<div class="internal-links">
-			<!-- <HeaderLink href="/"><span>Home</span></HeaderLink> -->
 			<HeaderLink href="/blog"><span>Blog</span></HeaderLink>
 			<HeaderLink href="/about"><span>About</span></HeaderLink>
 		</div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { SITE_TITLE } from "../../consts";
 import { LOGO_SMALL } from "../../assets/logos";
 import "./SiteLogo.scss";

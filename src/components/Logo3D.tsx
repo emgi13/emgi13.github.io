@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import { LOGO_LAYERS } from "../assets/logos";
 import Atropos from "atropos/react";
 import "./Logo3D.scss";
