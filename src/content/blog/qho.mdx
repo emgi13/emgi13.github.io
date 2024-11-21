@@ -6,6 +6,8 @@ pubDate: "2022"
 heroImage: "/assets/qho/qho_hero.png"
 ---
 
+> WIP
+
 ## Figures
 
 ### Figure 1: 2D Plot of $|\Psi|$ vs $x$, Animated by Time
@@ -23,126 +25,50 @@ This figure provides a 3D visualization of the real and imaginary parts of the w
 
 ![.](/assets/qho/states_cropped.gif)
 This figure depicts the eigenstates of the Hamiltonian. It shows how these states rotate over time while maintaining their orthonormality.
-In conclusion, the quantum harmonic oscillator is a rich and fascinating topic. It provides a window into the quantum world and helps us understand the behavior of quantum systems. By exploring the Schrödinger equation, basis construction, and state evolution, we gain valuable insights into the nature of quantum mechanics.
 
-The quantum harmonic oscillator is a fundamental concept in quantum mechanics. It provides insights into the behavior of quantum systems. In this blog post, we will explore the quantum harmonic oscillator in detail. We will discuss the time-dependent Schrödinger equation, basis construction, and matrix representation. We will also delve into the harmonic oscillator potential, Hamiltonian, and state evolution. Finally, we will examine the eigenstates and their properties.
-
-## Time-Dependent Schrödinger Equation
-
-The time-dependent Schrödinger equation is a cornerstone of quantum mechanics. It describes how the quantum state of a physical system changes over time. The equation is given by:
-
-$$
-i\hbar \frac{\partial}{\partial t} \Psi(x, t) = H \Psi(x, t)
-$$
-
-Here, $i$ is the imaginary unit, $\hbar$ is the reduced Planck's constant, $\Psi(x, t)$ is the wave function, and $H$ is the Hamiltonian operator.
-
-## Basis Construction Using Dirac Delta Functions
-
-To solve the Schrödinger equation, we need a basis. We can create a basis over the interval $[0,1]$ using Dirac delta functions. The Dirac delta function, $\delta(x - x_0)$, is zero everywhere except at $x = x_0$, where it is infinite. It satisfies the property:
-
-$$
-\int_{-\infty}^{\infty} \delta(x - x_0) f(x) \, dx = f(x_0)
-$$
-
-This basis allows us to represent any function as a column vector.
-
-## Matrix Representation of Operators
-
-In quantum mechanics, operators are used to describe physical observables. We can represent any operator as a matrix in the chosen basis. For example, the position operator $X$ can be represented as a diagonal matrix with position values on the diagonal.
-
-## Exponentiating a Matrix
-
-Exponentiating a matrix is crucial for solving the Schrödinger equation. We can understand this process using the Taylor expansion definition of the exponential function:
-
-$$
-e^A = I + A + \frac{A^2}{2!} + \frac{A^3}{3!} + \cdots
-$$
-
-Here, $A$ is a matrix, and $I$ is the identity matrix.
-
-## Harmonic Oscillator Potential
-
-A harmonic oscillator is a system that experiences a restoring force proportional to its displacement. The potential energy of a harmonic oscillator is given by:
-
-$$
-V(x) = \frac{1}{2} m \omega^2 x^2
-$$
-
-where $m$ is the mass and $\omega$ is the angular frequency.
-
-## Hamiltonian of the Harmonic Oscillator
-
-The Hamiltonian $H$ is the total energy operator of the system. For a harmonic oscillator, it is given by:
-
-$$
-H = \frac{P^2}{2m} + \frac{1}{2} m \omega^2 x^2
-$$
-
-where $P$ is the momentum operator.
-
-## Constructing the Laplacian Operator
-
-The Laplacian operator is essential for describing kinetic energy. In our basis, we construct it using finite differences. This operator acts on the wave function to give the second derivative with respect to position.
-
-## Constructing the Potential Operator
-
-The potential operator is diagonal in the position basis. It multiplies the wave function by the potential energy at each point.
-
-## Initial State as a Gaussian
-
-We choose an initial state for our system. A common choice is a Gaussian wave packet:
-
-$$
-\Psi(x, 0) = A e^{-\frac{(x - x_0)^2}{2\sigma^2}}
-$$
-
-where $A$ is the normalization constant, $x_0$ is the initial position, and $\sigma$ is the width of the packet.
-
-## Evolving the State Using Euler's Method
-
-To evolve the state in time, we use Euler's method. This numerical technique approximates the solution of differential equations. We update the wave function at each time step using:
-
-$$
-\Psi(x, t + \Delta t) = \Psi(x, t) - \frac{i}{\hbar} H \Psi(x, t) \Delta t
-$$
-
-## Diagonalized Representation of a Matrix
-
-Diagonalizing a matrix simplifies many calculations. A matrix $A$ can be diagonalized as:
-
-$$
-A = PDP^{-1}
-$$
-
-where $D$ is a diagonal matrix containing the eigenvalues of $A$, and $P$ is the matrix of eigenvectors.
-
-## Exponential of a Diagonal Matrix
-
-Computing the exponential of a diagonal matrix is straightforward. If $D$ is diagonal, then:
-
-$$
-e^D = \text{diag}(e^{d_1}, e^{d_2}, \ldots, e^{d_n})
-$$
-
-where $d_i$ are the diagonal elements of $D$.
-
-## Eigenstates of the Hamiltonian
-
-The eigenstates of the Hamiltonian are solutions to the time-independent Schrödinger equation. For a harmonic oscillator, these are well-known functions called Hermite polynomials.
-
-## Hamiltonian in Its Eigenstates Basis
-
-In the eigenstates basis, the Hamiltonian is diagonal. This simplifies the computation of the time evolution operator.
-
-## Computing the State at Time $t$
-
-With the Hamiltonian in its eigenstates basis, we can compute the state at any time $t$ directly. The time evolution operator is:
-
-$$
-U(t) = e^{-\frac{i}{\hbar} H t}
-$$
-
-## Rotating Basis of the Hamiltonian
-
-The Hamiltonian is Hermitian, meaning its eigenstates form an orthonormal basis. These basis states rotate in time but remain unchanged in magnitude. This property is crucial for understanding quantum dynamics.
+- Time Dependent Shrodinger Equation
+  - $i \hbar \frac{\partial \ket{\Psi } }{\partial t} = \hat{H} \ket{\Psi }$
+  - $\hat{H}$ is the hamiltonian
+    - $\hat{H} = -\frac{\hbar^2}{2m} \nabla ^2     + \hat{V}$
+- Basis
+  - we use the descrete orthonormal basis. the basis is formed by the eigenstates of the
+    position operator $\hat{X}$
+  - Construction
+    - split the interval $\left[ 0,1 \right] $ into $N$ points
+      - $\Delta x = \frac{1}{N-1}$
+      - $x_{i}=i\cdot \Delta x \quad \forall i \in \left\{ 0,\ldots ,1 \right\}$
+    - dot product
+      - $\braket{i|j}=\delta _{ij}$
+  - Representation
+    - $\ket{i}$ represents the point at $x_{i}$
+    - can be represented as the column vector
+      $\left( 0 \ldots  1 \ldots  0 \right)$, where the $1$ is at the ith position
+  - any state $\Psi(x)$ can be represented as $\sum_{n=0}^{N-1} c_n \ket{n}$
+    where $c_n = \Psi(x_n)$
+  - any operator $\hat{O}$ can be represented in the form of a matrix
+    - $O_{ij} = \bra{i} \hat{O} \ket{j}$
+    - Eg: Identity $\hat{I}$
+      - $I_{ij} = \bra{i} \hat{I} \ket{j} = \braket{i|j} = \delta _{ij}$
+      - this is the diagonal matrix with all diagonal entries 1
+      - this also proves the completeness of our basis
+    - Eg: Position $\hat{X}$
+      - $X_{ij}=\bra{i}\hat{X}\ket{j}$
+      - as $\hat{X}\ket{j} = x_j \ket{j}$
+      - $X_{ij}=x_j \braket{i|j}= x_j \delta _{ij}$
+      - this is a diagonal matrix with the positions as diagonal entries
+- Harmonic Potential
+  - what is a harmonic oscillator
+  - why is studying it useful
+  - $V(x)=\frac{1}{2}m \omega ^2 (x-\frac{1}{2})^2$
+  - $\hat{V}=\frac{1}{2}m \omega ^2 \left[\hat{X}-\hat{I}/2\right]^2$
+- Laplacian operator $\hat{\nabla ^2} $
+  - To approximate the laplacian in our basis, we can use the secant-line method
+  - $\frac{\partial ^2 }{\partial x^2} \approx \frac{x_{i+1}+x_{i-1}-2x_{i}}{{\Delta x} ^2}$
+  - $\hat{\nabla ^2} \approx \sum_n \frac{\ket{n+1}\bra{n}+\ket{n-1}\bra{n}-2\ket{n}\bra{n}}{{\Delta x}^2} $
+- We can combine the potential and kinetic energy terms to get the hamiltonian $\hat{H}$
+- We can then use Euler's method to evolve the state function
+  - $\ket{\Psi'}=\left( \hat{I} - \frac{i}{\hbar}\Delta t \hat{H} \right)\ket{\Psi } $
+- But we can do better
+  - as our hamiltonian is time independent, we can evaluate $\ket{\Psi (t)}$ directly given $\ket{\Psi (0)}$
+  - From TDSE $\frac{\partial \ket{\Psi }}{\partial t} = - \frac{i}{\hbar} \hat{H} \ket{\Psi} $
+  - $\frac{\mathrm{d }\ket{\Psi }}{\ket{\Psi }} = -\frac{i \mathrm{dt}}{\hbar} \hat{H}$
