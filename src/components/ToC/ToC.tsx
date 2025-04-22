@@ -74,7 +74,7 @@ class ToC extends React.Component<{}, ToCState> {
                   key={ind}
                   onClick={() => {
                     this.setState({ open: false });
-                    document.querySelector(`#${h.id}`)!.scrollIntoView({
+                    document.getElementById(`${h.id}`)!.scrollIntoView({
                       behavior: "auto",
                       block: "start",
                       inline: "nearest",
