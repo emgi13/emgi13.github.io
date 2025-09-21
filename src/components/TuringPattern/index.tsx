@@ -28,7 +28,7 @@ class TuringPattern extends React.Component<TuringPatternProps> {
     invert: false,
     perRow: 1,
   };
-  p5ref: React.RefObject<HTMLDivElement>;
+  p5ref: React.RefObject<HTMLDivElement | null>;
   p5: p5 | undefined;
   active: boolean;
   debounceTimeout: NodeJS.Timeout | undefined;

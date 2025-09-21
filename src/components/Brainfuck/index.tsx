@@ -150,8 +150,8 @@ const default_prog =
   "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.";
 
 class Brainfuck extends React.Component<BrainfuckProps, BrainfuckState> {
-  componentRef: React.RefObject<HTMLDivElement>;
-  titleRef: React.RefObject<HTMLDivElement>;
+  componentRef: React.RefObject<HTMLDivElement | null>;
+  titleRef: React.RefObject<HTMLDivElement | null>;
   static defaultProps: BrainfuckProps = {
     program: default_prog,
     maxMem: 4096,

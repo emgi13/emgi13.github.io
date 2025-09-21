@@ -5,7 +5,7 @@ import { alignForce, cohesionForce, Runner2D, sepForce, Vec2D } from "./runner";
 import { Slider } from "@mui/material";
 
 class Boids extends React.Component<BoidsProps> {
-  p5ref: React.RefObject<HTMLDivElement>;
+  p5ref: React.RefObject<HTMLDivElement | null>;
   p5: p5 | undefined;
   active: boolean;
   debounceTimeout: NodeJS.Timeout | undefined;

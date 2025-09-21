@@ -89,7 +89,7 @@ const prevSpeed = (curr: number): number => {
 // WARN: There is a resize issue on resize update
 
 class GameOfLifeComponent extends React.Component<{}, GameState> {
-  p5ref: React.RefObject<HTMLDivElement>;
+  p5ref: React.RefObject<HTMLDivElement | null>;
   p5: p5 | undefined;
   grid: number[][];
   constructor(props: {}) {
