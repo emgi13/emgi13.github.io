@@ -205,7 +205,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
             </div>
           </div>
           <div className="main">
-            <div className="canvas-cont" ref={this.p5ref}></div>
+            <div className="canvas-cont" ref={this.p5ref} style={{ touchAction: 'none' }}></div>
           </div>
         </div>
       </div>
@@ -214,6 +214,7 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
 
   componentDidMount(): void {
     this.p5 = new p5(this.sketch, this.p5ref.current as HTMLElement);
+    this.play();
   }
 
   componentWillUnmount(): void {
@@ -237,10 +238,11 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
   };
 
   pause() {
-    this.p5?.frameRate(0);
+    this.p5?.noLoop();
   }
 
   play() {
+    this.p5?.loop();
     this.p5?.frameRate(base_framerate * this.state.speed);
   }
 
@@ -277,8 +279,6 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
       const width = this.p5ref.current?.offsetWidth || 400;
       const height = this.p5ref.current?.offsetHeight || 400;
 
-      p.frameRate(base_framerate * this.state.speed);
-
       p.createCanvas(width, height);
       p.background(0, 0, 0, 0);
     };
@@ -288,19 +288,34 @@ class GameOfLifeComponent extends React.Component<{}, GameState> {
       this.renderGrid();
     };
 
-    p.touchStarted = () => {
-      const x = p.mouseX;
-      const y = p.mouseY;
+    const handleInteraction = () => {
+      let x, y;
+      if (p.touches.length > 0) {
+        x = (p.touches[0] as any).x;
+        y = (p.touches[0] as any).y;
+      } else {
+        x = p.mouseX;
+        y = p.mouseY;
+      }
+
       const w = p.width;
       const h = p.height;
       if (x < 0 || x >= w) return true;
       if (y < 0 || y >= h) return true;
       const i = Math.floor(x / this.step);
       const j = Math.floor(y / this.step);
-      this.grid[i][j] = 1 - this.grid[i][j];
+
+      if (i >= 0 && i < this.size && j >= 0 && j < this.size) {
+        this.grid[i][j] = 1 - this.grid[i][j];
+      } else {
+        console.warn('Attempted to toggle cell out of bounds. Ignoring.');
+      }
       this.renderGrid();
       return false;
     };
+
+    p.touchStarted = handleInteraction;
+    p.mousePressed = handleInteraction;
   };
 }
 
